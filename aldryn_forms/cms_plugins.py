@@ -18,7 +18,7 @@ from emailit.api import send_mail
 
 from filer.models import filemodels, imagemodels
 from sizefield.utils import filesizeformat
-
+import json
 from . import models
 from .forms import (
     RestrictedFileField,
@@ -115,7 +115,17 @@ class FormPlugin(FieldContainer):
     def process_form(self, instance, request):
         form_class = self.get_form_class(instance)
         form_kwargs = self.get_form_kwargs(instance, request)
+
+        if request.method == 'GET':
+            form_kwargs['data'] = self.get_saved_form(instance, request)
         form = form_class(**form_kwargs)
+        form.use_required_attribute = False
+        form.is_valid()
+        if request.method == 'POST' and 'save-button' in request.POST:
+            form._errors = {}
+
+            form.save()
+            return form
 
         if form.is_valid():
             fields = [field for field in form.base_fields.values()
@@ -156,6 +166,29 @@ class FormPlugin(FieldContainer):
             # only call form_invalid if request is POST and form is not valid
             self.form_invalid(instance, request, form)
         return form
+
+    def get_saved_form(self, form, request):
+        saved_form = models.FormSubmission.objects.filter(form=form,
+                                                          user=request.user, sent_at__isnull=True).order_by('id').last()
+        if saved_form:
+            data = json.loads(saved_form.data)
+            for field in form.child_plugin_instances:
+                if field.plugin_type in ['SelectField', 'MultipleSelectField', 'MultipleCheckboxSelectField']:
+                    data = self.get_field_selected_options(field, data)
+            return {item['name']: item['value'] for item in data}
+        return None
+
+    def get_field_selected_options(self, field, values):
+        for item in values:
+            if item['label'] == field.label:
+                opt = map(str.strip, item['value'].split(','))
+                qs = models.Option.objects.filter(field=field, value__in=opt).values_list('id', flat=True)
+                if qs.count() == 1:
+                    item['value'] = qs[0]
+                else:
+                    item['value'] = qs
+                break
+        return values
 
     def get_form_class(self, instance):
         """
@@ -301,14 +334,14 @@ class Field(FormElement):
         if isinstance(value, query.QuerySet):
             value = u', '.join(map(text_type, value))
         elif value is None:
-            value = '-'
+            value = ''
         return text_type(value)
 
     def serialize_field(self, form, field, is_confirmation=False):
         """Returns a (key, label, value) named tuple for the given field."""
         value = self.serialize_value(
             instance=field.plugin_instance,
-            value=form.cleaned_data[field.name],
+            value=form.cleaned_data.get(field.name),
             is_confirmation=is_confirmation
         )
         serialized_field = SerializedFormField(
@@ -556,10 +589,10 @@ class EmailField(BaseTextField):
     form_field_widget = forms.EmailInput
     form_field_widget_input_type = 'email'
     fieldset_advanced_fields = [
-        'email_send_notification',
-        'email_subject',
-        'email_body',
-    ] + Field.fieldset_advanced_fields
+                                   'email_send_notification',
+                                   'email_subject',
+                                   'email_body',
+                               ] + Field.fieldset_advanced_fields
     email_template_base = 'aldryn_forms/emails/user/notification'
 
     def send_notification_email(self, email, form, form_field_instance):
@@ -599,8 +632,8 @@ class FileField(Field):
         'validators',
     ]
     fieldset_general_fields = [
-        'upload_to',
-    ] + Field.fieldset_general_fields
+                                  'upload_to',
+                              ] + Field.fieldset_general_fields
     fieldset_advanced_fields = [
         'help_text',
         'max_size',
@@ -672,8 +705,8 @@ class ImageField(FileField):
     form_field = RestrictedImageField
     form_field_widget = RestrictedImageField.widget
     fieldset_general_fields = [
-        'upload_to',
-    ] + Field.fieldset_general_fields
+                                  'upload_to',
+                              ] + Field.fieldset_general_fields
     fieldset_advanced_fields = [
         'help_text',
         'max_size',
@@ -873,6 +906,7 @@ else:
             # None means don't serialize me
             return None
 
+
     plugin_pool.register_plugin(CaptchaField)
 
 
@@ -880,6 +914,10 @@ class SubmitButton(FormElement):
     render_template = 'aldryn_forms/submit_button.html'
     name = _('Submit Button')
     model = models.FormButtonPlugin
+
+
+class SaveProgressButton(SubmitButton):
+    name = _('Save button')
 
 
 plugin_pool.register_plugin(BooleanField)
@@ -896,5 +934,6 @@ plugin_pool.register_plugin(MultipleCheckboxSelectField)
 plugin_pool.register_plugin(RadioSelectField)
 plugin_pool.register_plugin(SelectField)
 plugin_pool.register_plugin(SubmitButton)
+plugin_pool.register_plugin(SaveProgressButton)
 plugin_pool.register_plugin(TextAreaField)
 plugin_pool.register_plugin(TextField)

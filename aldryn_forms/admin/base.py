@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.utils import six
 from django.utils.translation import ugettext_lazy as _
+from aldryn_forms.models import FormSubmission
 
 if six.PY2:
     str_dunder_method = '__unicode__'
@@ -18,6 +19,8 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
     list_display = [str_dunder_method, 'sent_at', 'language']
     list_filter = ['name', 'language']
     readonly_fields = [
+        'form',
+        'user',
         'name',
         'get_data_for_display',
         'language',

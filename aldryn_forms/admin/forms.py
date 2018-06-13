@@ -78,6 +78,7 @@ class BaseFormExportForm(forms.Form):
         from_date, to_date = data.get('from_date'), data.get('to_date')
 
         queryset = self.model.objects.filter(
+            sent_at__isnull=False,
             name=data['form_name'],
             language=data['language'],
         )

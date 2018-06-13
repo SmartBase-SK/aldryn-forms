@@ -11,6 +11,8 @@ from sizefield.utils import filesizeformat
 from .models import FormSubmission, FormPlugin
 from .utils import add_form_error, get_user_model
 
+from datetime import datetime
+
 
 class FileSizeCheckMixin(object):
     def __init__(self, *args, **kwargs):
@@ -96,10 +98,14 @@ class FormSubmissionBaseForm(forms.Form):
         super(FormSubmissionBaseForm, self).__init__(*args, **kwargs)
         language = self.form_plugin.language
 
+        send_at = datetime.now() if 'save-button' not in self.request.POST else None
         self.instance = FormSubmission(
+            user=self.request.user,
+            form=self.form_plugin,
             name=self.form_plugin.name,
             language=language,
             form_url=self.request.build_absolute_uri(self.request.path),
+            sent_at=send_at
         )
         self.fields['language'].initial = language
         self.fields['form_plugin_id'].initial = self.form_plugin.pk

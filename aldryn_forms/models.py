@@ -538,6 +538,18 @@ class FormButtonPlugin(CMSPlugin):
 
 @python_2_unicode_compatible
 class FormSubmission(models.Model):
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        related_name='user_forms',
+        null=True,
+    )
+
+    form = models.ForeignKey(
+        to=FormPlugin,
+        related_name='submited_forms',
+        null=True
+    )
+
     name = models.CharField(
         max_length=255,
         verbose_name=_('form name'),
@@ -562,7 +574,7 @@ class FormSubmission(models.Model):
         max_length=255,
         blank=True,
     )
-    sent_at = models.DateTimeField(auto_now_add=True)
+    sent_at = models.DateTimeField(null=True)
 
     class Meta:
         ordering = ['-sent_at']
