@@ -170,9 +170,9 @@ class FormPlugin(FieldContainer):
         return form
 
     def get_saved_form(self, form, request):
-        saved_form = models.FormSubmission.objects.filter(form=form,
-                                                          user=request.user, sent_at__isnull=True).order_by('id').last()
-        if saved_form:
+        if request.user.is_authenticated:
+            saved_form = models.FormSubmission.objects.filter(form=form,
+                                                              user=request.user, sent_at__isnull=True).order_by('id').last()
             data = json.loads(saved_form.data)
             for field in form.child_plugin_instances:
                 if field.plugin_type in ['SelectField', 'MultipleSelectField', 'MultipleCheckboxSelectField']:
