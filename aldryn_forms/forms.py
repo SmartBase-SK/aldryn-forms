@@ -99,8 +99,9 @@ class FormSubmissionBaseForm(forms.Form):
         language = self.form_plugin.language
 
         send_at = datetime.now() if 'save-button' not in self.request.POST else None
+        user = self.request.user if self.request.user.is_authenticated else None
         self.instance = FormSubmission(
-            user=self.request.user,
+            user=user,
             form=self.form_plugin,
             name=self.form_plugin.name,
             language=language,

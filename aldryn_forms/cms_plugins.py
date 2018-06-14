@@ -117,7 +117,9 @@ class FormPlugin(FieldContainer):
         form_kwargs = self.get_form_kwargs(instance, request)
 
         if request.method == 'GET':
-            form_kwargs['data'] = self.get_saved_form(instance, request)
+            form_data = self.get_saved_form(instance, request)
+            if form_data:
+                form_kwargs['data'] = form_data
         form = form_class(**form_kwargs)
         form.use_required_attribute = False
         form.is_valid()
