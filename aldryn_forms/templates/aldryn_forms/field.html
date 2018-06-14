@@ -13,9 +13,11 @@
             <abbr title="{% trans "Required field" %}">*</abbr>
         {% endif %}
     </label>
-
-    {% render_form_widget field class=instance.custom_classes %}
-
+    {% if field.field.widget.input_type == 'email' or field.field.widget.input_type == 'select' or field.field.widget.input_type == 'text' or field.field.widget.input_type == 'number' or not field.field.widget.input_type%}
+    {% render_form_widget field class=instance.custom_classes|add:' form-control' %}
+    {% else %}
+        {% render_form_widget field class=instance.custom_classes %}
+    {% endif %}
     {% if field.errors %}
         {% for error in field.errors %}
             <p>{{ error }}</p>

@@ -25,6 +25,7 @@
         {% csrf_token %}
         {% for plugin in instance.child_plugin_instances %}
             {% render_plugin plugin %}
+            <br>
         {% endfor %}
         {% for field in form.hidden_fields %}
             {{ field }}

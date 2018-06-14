@@ -1,3 +1,3 @@
-<button type="submit" {% if instance.custom_classes %} class="btn btn-success {{ instance.custom_classes}}"{% endif %} {% if instance.plugin_type == 'SaveProgressButton' %} name="save-button" {% endif %}>
+<button type="submit" class="btn btn-block btn-outline-npc {% if instance.custom_classes %} {{ instance.custom_classes}} {% endif %}" {% if instance.plugin_type == 'SaveProgressButton' %} name="save-button" {% endif %}>
     {{ instance.label }}
 </button>
