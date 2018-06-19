@@ -10,6 +10,7 @@ from django.template.loader import select_template
 from django.utils.safestring import mark_safe
 from django.utils.six import text_type
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.http import HttpResponseBadRequest
 
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
@@ -40,7 +41,7 @@ from .forms import (
 from .helpers import get_user_name
 from .models import SerializedFormField
 from .signals import form_pre_save, form_post_save
-from .utils import get_action_backends
+from .utils import get_action_backends, get_plugin_tree
 from .validators import (
     is_valid_recipient,
     MinChoicesValidator,
@@ -193,6 +194,18 @@ class FormPlugin(FieldContainer):
                     item['value'] = qs[0] if qs.count() == 1 else qs
                 break
         return values
+
+    @staticmethod
+    def process_form_from_request(request):
+        form_plugin_id = request.POST.get('form_plugin_id') or ''
+        form_plugin_id = int(form_plugin_id)
+        try:
+            form_plugin = get_plugin_tree(models.FormPlugin, pk=form_plugin_id)
+        except models.FormPlugin.DoesNotExist:
+            return HttpResponseBadRequest()
+
+        form_instance = form_plugin.get_plugin_instance()[1]
+        return form_instance.process_form(form_plugin, request)
 
     def get_form_class(self, instance):
         """
