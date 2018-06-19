@@ -44,7 +44,7 @@ from .utils import get_action_backends
 from .validators import (
     is_valid_recipient,
     MinChoicesValidator,
-    MaxChoicesValidator
+    MaxChoicesValidator,
 )
 
 
@@ -120,16 +120,18 @@ class FormPlugin(FieldContainer):
             form_data = self.get_saved_form(instance, request)
             if form_data:
                 form_kwargs['data'] = form_data
+                form_kwargs['data']['form_plugin_id'] = form_kwargs['form_plugin'].id
+
         form = form_class(**form_kwargs)
         form.use_required_attribute = False
-        form.is_valid()
-        if request.method == 'POST' and 'save-button' in request.POST:
-            form._errors = {}
 
+        if request.method == 'POST' and 'save-button' in request.POST:
+            form.is_valid()
+            form._errors = {}
             form.save()
             return form
 
-        if form.is_valid():
+        if request.method == 'POST' and form.is_valid():
             fields = [field for field in form.base_fields.values()
                       if hasattr(field, '_plugin_instance')]
 
@@ -175,8 +177,7 @@ class FormPlugin(FieldContainer):
         if saved_form:
             data = json.loads(saved_form.data)
             for field in form.child_plugin_instances:
-                if field.plugin_type in ['SelectField', 'MultipleSelectField', 'MultipleCheckboxSelectField',
-                                         'RadioSelectField']:
+                if field.plugin_type in ['SelectField', 'MultipleSelectField', 'MultipleCheckboxSelectField', 'RadioSelectField', 'BooleanField']:
                     data = self.get_field_selected_options(field, data)
             return {item['name']: item['value'] for item in data}
         return None
@@ -184,12 +185,12 @@ class FormPlugin(FieldContainer):
     def get_field_selected_options(self, field, values):
         for item in values:
             if item['label'] == field.label:
-                opt = map(str.strip, item['value'].split(','))
-                qs = models.Option.objects.filter(field=field, value__in=opt).values_list('id', flat=True)
-                if qs.count() == 1:
-                    item['value'] = qs[0]
+                if field.plugin_type == 'BooleanField':
+                    item['value'] = 1 if item['value'] == 'Yes' else 0
                 else:
-                    item['value'] = qs
+                    opt = map(str.strip, item['value'].split(','))
+                    qs = models.Option.objects.filter(field=field, value__in=opt).values_list('id', flat=True)
+                    item['value'] = qs[0] if qs.count() == 1 else qs
                 break
         return values
 
