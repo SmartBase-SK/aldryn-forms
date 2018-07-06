@@ -83,7 +83,6 @@ class RestrictedImageField(FileSizeCheckMixin, forms.ImageField):
 
 
 class FormSubmissionBaseForm(forms.Form):
-
     # these fields are internal.
     # by default we ignore all hidden fields when saving form data to db.
     language = forms.ChoiceField(
@@ -100,9 +99,15 @@ class FormSubmissionBaseForm(forms.Form):
 
         send_at = datetime.now() if 'save-button' not in self.request.POST else None
         user = self.request.user if self.request.user.is_authenticated else None
+        action = 'submit'
+        if self.request.method == 'POST':
+            if 'save-button' in self.request.POST or not self.is_valid():
+                action = 'save'
+
         self.instance = FormSubmission(
             user=user,
             form=self.form_plugin,
+            action=action,
             name=self.form_plugin.name,
             language=language,
             form_url=self.request.build_absolute_uri(self.request.path),
@@ -145,6 +150,11 @@ class FormSubmissionBaseForm(forms.Form):
         return form_data
 
     def save(self, commit=False):
+        if self.request.user.is_authenticated:
+            qs = FormSubmission.objects.filter(user=self.request.user, action='save', form=self.form_plugin)
+            if not self.is_valid():
+                qs.filter(sent_at__isnull='save-button' in self.request.POST)
+            qs.delete()
         self.instance.set_form_data(self)
         self.instance.save()
 
@@ -200,19 +210,16 @@ class BooleanFieldForm(forms.ModelForm):
 
 
 class SelectFieldForm(forms.ModelForm):
-
     class Meta:
         fields = ['label', 'help_text', 'required', 'required_message', 'custom_classes']
 
 
 class RadioFieldForm(forms.ModelForm):
-
     class Meta:
         fields = ['label', 'help_text', 'required', 'required_message', 'custom_classes']
 
 
 class CaptchaFieldForm(forms.ModelForm):
-
     class Meta:
         # captcha is always required
         fields = ['label', 'help_text', 'required_message']

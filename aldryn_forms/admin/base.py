@@ -25,6 +25,7 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
         'get_data_for_display',
         'language',
         'sent_at',
+        'action',
         'get_recipients_for_display',
     ]
 

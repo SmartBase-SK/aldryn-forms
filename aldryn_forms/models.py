@@ -550,6 +550,12 @@ class FormSubmission(models.Model):
         null=True
     )
 
+    action = models.CharField(
+        max_length=10,
+        null=True,
+        editable=False,
+    )
+
     name = models.CharField(
         max_length=255,
         verbose_name=_('form name'),

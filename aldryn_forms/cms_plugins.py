@@ -126,11 +126,11 @@ class FormPlugin(FieldContainer):
         form = form_class(**form_kwargs)
         form.use_required_attribute = False
 
-        if request.method == 'POST' and 'save-button' in request.POST:
-            form.is_valid()
-            form._errors = {}
-            form.save()
-            return form
+        if request.method == 'POST':
+            if not form.is_valid() or 'save-button' in request.POST:
+                form._errors = {}
+                form.save()
+                return form
 
         if request.method == 'POST' and form.is_valid():
             fields = [field for field in form.base_fields.values()
@@ -174,11 +174,13 @@ class FormPlugin(FieldContainer):
 
     def get_saved_form(self, form, request):
         saved_form = models.FormSubmission.objects.filter(form=form,
-                                                          user=request.user, sent_at__isnull=True).order_by('id').last()
+                                                          user=request.user,
+                                                          action='save').order_by('id').last()
         if saved_form:
             data = json.loads(saved_form.data)
             for field in form.child_plugin_instances:
-                if field.plugin_type in ['SelectField', 'MultipleSelectField', 'MultipleCheckboxSelectField', 'RadioSelectField', 'BooleanField']:
+                if field.plugin_type in ['SelectField', 'MultipleSelectField', 'MultipleCheckboxSelectField',
+                                         'RadioSelectField', 'BooleanField']:
                     data = self.get_field_selected_options(field, data)
             return {item['name']: item['value'] for item in data}
         return None
