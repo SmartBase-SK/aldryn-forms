@@ -126,13 +126,12 @@ class FormPlugin(FieldContainer):
         form = form_class(**form_kwargs)
         form.use_required_attribute = False
 
-        if request.method == 'POST':
-            if not form.is_valid() or 'save-button' in request.POST:
-                form._errors = {}
-                form.save()
-                return form
-
-        if request.method == 'POST' and form.is_valid():
+        if request.method == 'POST' and 'save-button' in request.POST:
+            form.is_valid()
+            form._errors = {}
+            form.save()
+            return form
+        elif request.method == 'POST' and form.is_valid():
             fields = [field for field in form.base_fields.values()
                       if hasattr(field, '_plugin_instance')]
 
