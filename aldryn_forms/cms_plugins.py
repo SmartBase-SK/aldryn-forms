@@ -94,10 +94,10 @@ class FormPlugin(FieldContainer):
         context = super(FormPlugin, self).render(context, instance, placeholder)
         request = context['request']
 
-        form = self.process_form(instance, request)
+        (form, success) = self.process_form(instance, request)
 
         if form.is_valid():
-            context['post_success'] = True
+            context['post_success'] = success
             context['form_success_url'] = self.get_success_url(instance)
         context['form'] = form
         return context
@@ -130,11 +130,12 @@ class FormPlugin(FieldContainer):
             form.is_valid()
             form._errors = {}
             form.save()
-            return form
+            messages.add_message(request, messages.WARNING,
+                                 _("Your information was saved. You can complete it on your next visit."))
+            return form, True
         elif request.method == 'POST' and form.is_valid():
             fields = [field for field in form.base_fields.values()
                       if hasattr(field, '_plugin_instance')]
-
             # pre save field hooks
             for field in fields:
                 field._plugin_instance.form_pre_save(
@@ -166,10 +167,11 @@ class FormPlugin(FieldContainer):
                 form=form,
                 request=request,
             )
+            return form, True
         elif request.method == 'POST':
             # only call form_invalid if request is POST and form is not valid
             self.form_invalid(instance, request, form)
-        return form
+        return form, False
 
     def get_saved_form(self, form, request):
         saved_form = models.FormSubmission.objects.filter(form=form,
@@ -250,7 +252,7 @@ class FormPlugin(FieldContainer):
         Sends a success message to the request user
         using django's contrib.messages app.
         """
-        message = instance.success_message or ugettext('The form has been sent.')
+        message = instance.success_message or _("Thank you for submitting your information.")
         messages.success(request, mark_safe(message))
 
     def send_notifications(self, instance, form):
