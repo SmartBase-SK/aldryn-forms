@@ -9,6 +9,7 @@ class Exporter(object):
 
     def get_dataset(self, fields):
         headers = [field.rpartition('-')[0] for field in fields]
+        headers.append('Client code')
         dataset = Dataset(headers=headers)
 
         for submission in self.queryset.only('data').iterator():
@@ -25,6 +26,10 @@ class Exporter(object):
                     row_data.append('')
 
             if row_data:
+                if hasattr(submission.user, 'npcuser'):
+                    row_data.append(submission.user.npcuser.client_code)
+                else:
+                    row_data.append("")
                 dataset.append(row_data)
         return dataset
 
