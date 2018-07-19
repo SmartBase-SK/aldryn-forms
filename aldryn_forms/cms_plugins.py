@@ -79,6 +79,7 @@ class FormPlugin(FieldContainer):
         (_('Advanced Settings'), {
             'classes': ('collapse',),
             'fields': (
+                'form_detail_field',
                 'form_template',
                 'error_message',
                 'success_message',

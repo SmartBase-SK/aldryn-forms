@@ -21,6 +21,7 @@ from sizefield.models import FileSizeField
 
 from .helpers import is_form_element
 from .utils import ALDRYN_FORMS_ACTION_BACKEND_KEY_MAX_SIZE, action_backend_choices
+from ckeditor_uploader.fields import RichTextUploadingField
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
@@ -170,6 +171,11 @@ class BaseFormPlugin(CMSPlugin):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
+    )
+
+    form_detail_field = RichTextUploadingField(
+        null=True,
+        blank=True,
     )
 
     cmsplugin_ptr = CMSPluginField()
