@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
+import os
+import zipfile
 from email.utils import formataddr
+from io import BytesIO
 
 from django.contrib import admin
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.utils import six
 from django.utils.translation import ugettext_lazy as _
-from aldryn_forms.models import FormSubmission
 
 if six.PY2:
     str_dunder_method = '__unicode__'
@@ -29,6 +32,20 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
         'action',
         'get_recipients_for_display',
     ]
+    actions = ['bulk_pdf_download']
+
+    def bulk_pdf_download(self, request, queryset):
+        data_store = BytesIO()
+        zf = zipfile.ZipFile(data_store, 'w')
+        for form in queryset:
+            f_dir, fname = os.path.split(form.file.path)
+            zf.write(form.file.path, fname)
+        zf.close()
+        response = HttpResponse(data_store.getvalue(), content_type="application/x-zip-compressed")
+        response['Content-Disposition'] = 'attachment; filename=%s' % 'PDF_export.zip'
+        return response
+
+    bulk_pdf_download.short_description = "Download PDF files form selected forms"
 
     def has_add_permission(self, request):
         return False
