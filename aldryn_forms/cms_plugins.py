@@ -198,18 +198,6 @@ class FormPlugin(FieldContainer):
                 break
         return values
 
-    @staticmethod
-    def process_form_from_request(request):
-        form_plugin_id = request.POST.get('form_plugin_id') or ''
-        form_plugin_id = int(form_plugin_id)
-        try:
-            form_plugin = get_plugin_tree(models.FormPlugin, pk=form_plugin_id)
-        except models.FormPlugin.DoesNotExist:
-            return HttpResponseBadRequest()
-
-        form_instance = form_plugin.get_plugin_instance()[1]
-        return form_instance.process_form(form_plugin, request)
-
     def get_form_class(self, instance):
         """
         Constructs form class basing on children plugin instances.

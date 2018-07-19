@@ -19,6 +19,7 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
     list_display = [str_dunder_method, 'sent_at', 'language']
     list_filter = ['name', 'language']
     readonly_fields = [
+        'file',
         'form',
         'user',
         'name',
@@ -39,6 +40,7 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
             {'data': data}
         )
         return html
+
     get_data_for_display.allow_tags = True
     get_data_for_display.short_description = _('data')
 
@@ -55,6 +57,7 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
             {'people': people_list},
         )
         return html
+
     get_recipients_for_display.allow_tags = True
     get_recipients_for_display.short_description = _('people notified')
 

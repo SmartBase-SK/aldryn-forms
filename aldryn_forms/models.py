@@ -544,6 +544,11 @@ class FormSubmission(models.Model):
         null=True,
     )
 
+    file = models.FileField(
+        null=True,
+        upload_to="forms"
+    )
+
     form = models.ForeignKey(
         to=FormPlugin,
         related_name='submited_forms',

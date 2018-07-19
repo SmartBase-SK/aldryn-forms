@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from PIL import Image
-
 from django import forms
 from django.conf import settings
 from django.forms.forms import NON_FIELD_ERRORS
@@ -151,6 +150,8 @@ class FormSubmissionBaseForm(forms.Form):
 
     def save(self, commit=False):
         if self.request.user.is_authenticated:
+            pdf_file = self.form_plugin.generated_file if hasattr(self.form_plugin, 'generated_file') else None
+            self.instance.file = pdf_file
             qs = FormSubmission.objects.filter(user=self.request.user, action='save', form=self.form_plugin)
             if not self.is_valid():
                 qs.filter(sent_at__isnull='save-button' in self.request.POST)
