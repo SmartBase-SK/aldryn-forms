@@ -546,7 +546,6 @@ class FormSubmission(models.Model):
 
     file = models.FileField(
         null=True,
-        upload_to="forms"
     )
 
     form = models.ForeignKey(
