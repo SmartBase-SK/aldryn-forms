@@ -7,9 +7,11 @@ class Exporter(object):
     def __init__(self, queryset):
         self.queryset = queryset
 
-    def get_dataset(self, fields):
+    def get_dataset(self, fields, with_user_data):
         headers = [field.rpartition('-')[0] for field in fields]
-        headers.append('Client code')
+        if with_user_data:
+            headers = self.include_user_headers(headers)
+
         dataset = Dataset(headers=headers)
 
         for submission in self.queryset.only('data').iterator():
@@ -24,14 +26,27 @@ class Exporter(object):
                         break
                 else:
                     row_data.append('')
-
-            if row_data:
-                if hasattr(submission.user, 'npcuser'):
-                    row_data.append(submission.user.npcuser.client_code)
-                else:
-                    row_data.append("")
-                dataset.append(row_data)
+            if with_user_data:
+                row_data = self.include_user_data(submission, row_data)
+            dataset.append(row_data)
         return dataset
+
+    def include_user_data(self, submission, data):
+        user_attrs = ['first_name', 'last_name', 'email', 'client', 'client_code']
+        user_data = []
+        if hasattr(submission, 'user') and hasattr(submission.user, 'npcuser'):
+            for attr in user_attrs:
+                if hasattr(submission.user.npcuser, attr):
+                    user_data.append(getattr(submission.user.npcuser, attr))
+                else:
+                    user_data.append("")
+        return user_data + data
+
+
+
+
+    def include_user_headers(self, headers):
+        return ['First name', 'Last name', 'Email', 'Client type', 'Client code'] + headers
 
     def get_fields_for_export(self):
         old_fields = []

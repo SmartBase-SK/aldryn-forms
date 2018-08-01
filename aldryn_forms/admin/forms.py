@@ -43,6 +43,9 @@ class BaseFormExportForm(forms.Form):
         label=_('language'),
         choices=settings.LANGUAGES
     )
+    user_data = forms.BooleanField(
+        label=_("Include user data"),
+    )
 
     def __init__(self, *args, **kwargs):
         super(BaseFormExportForm, self).__init__(*args, **kwargs)

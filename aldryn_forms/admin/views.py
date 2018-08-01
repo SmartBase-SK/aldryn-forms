@@ -88,8 +88,9 @@ class FormExportWizardView(SessionWizardView):
 
         fields = step_2_form.get_fields()
         queryset = step_1_form.get_queryset()
+        user_data = step_1_form.cleaned_data['user_data']
 
-        dataset = Exporter(queryset=queryset).get_dataset(fields=fields)
+        dataset = Exporter(queryset=queryset).get_dataset(fields=fields, with_user_data=user_data)
 
         filename = step_1_form.get_filename(extension=self.file_type)
 
