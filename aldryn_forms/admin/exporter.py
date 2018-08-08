@@ -10,6 +10,8 @@ class Exporter(object):
     def get_dataset(self, fields, with_user_data, with_extended_data):
         headers = [field.rpartition('-')[0] for field in fields]
 
+        headers = self.include_user_verification_headers(headers)
+
         if with_extended_data:
             client_type = self.queryset.first().user.npcuser.client
             headers = self.include_extended_data_headers(headers, client_type)
@@ -32,6 +34,8 @@ class Exporter(object):
                 else:
                     row_data.append('')
 
+            row_data = self.include_user_verification_data(submission, row_data)
+
             if with_extended_data:
                 row_data = self.include_extended_user_data(submission, row_data)
 
@@ -39,6 +43,13 @@ class Exporter(object):
                 row_data = self.include_user_data(submission, row_data)
             dataset.append(row_data)
         return dataset
+
+    def include_user_verification_data(self, submission, data):
+        if hasattr(submission, 'user') and hasattr(submission.user, 'npcuser'):
+            reg_signed = 'Yes' if submission.user.npcuser.registration_signed is True else "No"
+            msp_verified = 'Yes' if submission.user.npcuser.msp_status_verified is True else "No"
+            return [reg_signed, msp_verified, submission.user.npcuser.msp_verification_date] + data
+        return ["", "", ""] + data
 
     def include_user_data(self, submission, data):
         user_attrs = ['first_name', 'last_name', 'email', 'client', 'client_code']
@@ -64,6 +75,9 @@ class Exporter(object):
             for attr in attr_list:
                 extended_data.append(str(getattr(data_ob, attr, "")))
         return extended_data + data
+
+    def include_user_verification_headers(self, headers):
+        return ['Registration signed', 'MSP status verified', 'MSP status verification date'] + headers
 
     def include_user_headers(self, headers):
         return ['First name', 'Last name', 'Email', 'Client type', 'Client code'] + headers
