@@ -9,7 +9,6 @@ from ..compat import SessionWizardView
 from .exporter import Exporter
 from .forms import FormExportStep1Form, FormExportStep2Form
 
-
 mimetype_map = {
     'xls': 'application/vnd.ms-excel',
     'csv': 'text/csv',
@@ -89,8 +88,10 @@ class FormExportWizardView(SessionWizardView):
         fields = step_2_form.get_fields()
         queryset = step_1_form.get_queryset()
         user_data = step_1_form.cleaned_data['user_data']
+        extended_data = step_1_form.cleaned_data['extended_user_data']
 
-        dataset = Exporter(queryset=queryset).get_dataset(fields=fields, with_user_data=user_data)
+        dataset = Exporter(queryset=queryset).get_dataset(fields=fields, with_user_data=user_data,
+                                                          with_extended_data=extended_data)
 
         filename = step_1_form.get_filename(extension=self.file_type)
 

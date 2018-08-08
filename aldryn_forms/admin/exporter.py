@@ -7,8 +7,13 @@ class Exporter(object):
     def __init__(self, queryset):
         self.queryset = queryset
 
-    def get_dataset(self, fields, with_user_data):
+    def get_dataset(self, fields, with_user_data, with_extended_data):
         headers = [field.rpartition('-')[0] for field in fields]
+
+        if with_extended_data:
+            client_type = self.queryset.first().user.npcuser.client
+            headers = self.include_extended_data_headers(headers, client_type)
+
         if with_user_data:
             headers = self.include_user_headers(headers)
 
@@ -26,6 +31,10 @@ class Exporter(object):
                         break
                 else:
                     row_data.append('')
+
+            if with_extended_data:
+                row_data = self.include_extended_user_data(submission, row_data)
+
             if with_user_data:
                 row_data = self.include_user_data(submission, row_data)
             dataset.append(row_data)
@@ -36,17 +45,34 @@ class Exporter(object):
         user_data = []
         if hasattr(submission, 'user') and hasattr(submission.user, 'npcuser'):
             for attr in user_attrs:
-                if hasattr(submission.user.npcuser, attr):
-                    user_data.append(getattr(submission.user.npcuser, attr))
-                else:
-                    user_data.append("")
+                user_data.append(getattr(submission.user.npcuser, attr, ""))
         return user_data + data
 
+    def include_extended_user_data(self, submission, data):
+        individual_person_attr = ['identification_number', 'phone', 'address']
+        legal_person_attr = ['ico', 'dic', 'company_name', 'place_of_business']
+        extended_data = []
+        if hasattr(submission, 'user') and hasattr(submission.user, 'npcuser'):
+            if submission.user.npcuser.client == 'A':
+                attr_list = individual_person_attr
+                attr_name = 'individual_person'
+            else:
+                attr_list = legal_person_attr
+                attr_name = 'legal_person'
+            data_ob = getattr(submission.user.npcuser, attr_name, None)
 
-
+            for attr in attr_list:
+                extended_data.append(str(getattr(data_ob, attr, "")))
+        return extended_data + data
 
     def include_user_headers(self, headers):
         return ['First name', 'Last name', 'Email', 'Client type', 'Client code'] + headers
+
+    def include_extended_data_headers(self, headers, client_type):
+        if client_type == 'A':
+            return ['Identification number', 'Phone number', 'Address'] + headers
+        else:
+            return ['ICO', 'DIC', 'Company name', 'Business address'] + headers
 
     def get_fields_for_export(self):
         old_fields = []

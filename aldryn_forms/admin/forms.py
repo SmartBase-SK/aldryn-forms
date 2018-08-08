@@ -45,6 +45,13 @@ class BaseFormExportForm(forms.Form):
     )
     user_data = forms.BooleanField(
         label=_("Include user data"),
+        help_text=_("Contains name, email, client type, client code"),
+        required=False,
+    )
+    extended_user_data = forms.BooleanField(
+        label=_("include other user data"),
+        help_text=_("Contains identification number, phone, address for individual clients and ico, dic, company name, address for business clients"),
+        required=False,
     )
 
     def __init__(self, *args, **kwargs):
