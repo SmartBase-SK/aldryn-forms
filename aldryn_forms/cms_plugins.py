@@ -64,6 +64,11 @@ class FormPlugin(FieldContainer):
     name = _('Form')
     module = _('Form types')
     model = models.FormPlugin
+
+    child_classes = (
+        'BooleanField', 'EmailField', 'FileField', 'HiddenField', 'PhoneField', 'NumberField', 'ImageField', 'Fieldset',
+        'MultipleSelectField', 'MultipleCheckboxSelectField', 'RadioSelectField', 'SelectField', 'SubmitButton',
+        'SaveProgressButton', 'TextAreaField', 'TextField')
     form = FormPluginForm
     filter_horizontal = ['recipients']
 
@@ -271,6 +276,7 @@ class FormPlugin(FieldContainer):
 class Fieldset(FieldContainer):
     render_template = True
     name = _('Fieldset')
+    parent_classes = (FormPlugin,)
     model = models.FieldsetPlugin
 
     fieldsets = (
@@ -310,6 +316,7 @@ class Field(FormElement):
     module = _('Form fields')
     # template name is calculated based on field
     render_template = True
+    parent_classes = ('FormPlugin',)
     model = models.FieldPlugin
 
     # Custom field related attributes
@@ -500,6 +507,7 @@ class Field(FormElement):
 class BaseTextField(Field):
     form = TextFieldForm
     form_field = forms.CharField
+    parent_classes = ('FormPlugin',)
     form_field_widget = forms.CharField.widget
     form_field_widget_input_type = 'text'
     form_field_enabled_options = [
@@ -535,6 +543,7 @@ class TextAreaField(BaseTextField):
     name = _('Text Area Field')
     model = models.TextAreaFieldPlugin
     form = TextAreaFieldForm
+    parent_classes = ('FormPlugin',)
     form_field_widget = forms.Textarea
     fieldset_general_fields = [
         'label',
@@ -576,6 +585,7 @@ class HiddenField(BaseTextField):
     name = _('Hidden Field')
     form = HiddenFieldForm
     form_field_widget_input_type = 'hidden'
+    parent_classes = ('FormPlugin',)
     fieldset_general_fields = ['name', 'initial_value']
     fieldset_advanced_fields = []
 
@@ -583,17 +593,20 @@ class HiddenField(BaseTextField):
 class PhoneField(BaseTextField):
     name = _('Phone Field')
     form_field_widget_input_type = 'phone'
+    parent_classes = ('FormPlugin',)
 
 
 class NumberField(BaseTextField):
     name = _('Number Field')
     form_field_widget_input_type = 'number'
+    parent_classes = ('FormPlugin',)
 
 
 class EmailField(BaseTextField):
     name = _('Email Field')
     model = models.EmailFieldPlugin
     form = EmailFieldForm
+    parent_classes = ('FormPlugin',)
     form_field = forms.EmailField
     form_field_widget = forms.EmailInput
     form_field_widget_input_type = 'email'
@@ -629,7 +642,7 @@ class EmailField(BaseTextField):
 class FileField(Field):
     name = _('File upload field')
     model = models.FileUploadFieldPlugin
-
+    parent_classes = ('FormPlugin',)
     form = FileFieldForm
     form_field = RestrictedFileField
     form_field_widget = RestrictedFileField.widget
@@ -709,7 +722,7 @@ class FileField(Field):
 class ImageField(FileField):
     name = _('Image upload field')
     model = models.ImageUploadFieldPlugin
-
+    parent_classes = ('FormPlugin',)
     form = ImageFieldForm
     form_field = RestrictedImageField
     form_field_widget = RestrictedImageField.widget
@@ -746,7 +759,7 @@ class BooleanField(Field):
     # checkbox field
     # I add the above because searching for "checkbox" should give me this plugin :)
     name = _('Yes/No Field')
-
+    parent_classes = ('FormPlugin',)
     form = BooleanFieldForm
     form_field = forms.BooleanField
     form_field_widget = form_field.widget
@@ -778,7 +791,7 @@ class SelectOptionInline(TabularInline):
 
 class SelectField(Field):
     name = _('Select Field')
-
+    parent_classes = ('FormPlugin',)
     form = SelectFieldForm
     form_field = forms.ModelChoiceField
     form_field_widget = form_field.widget
@@ -814,7 +827,7 @@ class SelectField(Field):
 
 class MultipleSelectField(SelectField):
     name = _('Multiple Select Field')
-
+    parent_classes = ('FormPlugin',)
     form = MultipleSelectFieldForm
     form_field = forms.ModelMultipleChoiceField
     form_field_widget = forms.CheckboxSelectMultiple
@@ -857,7 +870,7 @@ class MultipleCheckboxSelectField(MultipleSelectField):
 
 class RadioSelectField(Field):
     name = _('Radio Select Field')
-
+    parent_classes = ('FormPlugin',)
     form = RadioFieldForm
     form_field = forms.ModelChoiceField
     form_field_widget = forms.RadioSelect
@@ -901,6 +914,7 @@ else:
     class CaptchaField(Field):
         name = _('Captcha Field')
         form = CaptchaFieldForm
+        parent_classes = ('FormPlugin',)
         form_field = CaptchaField
         form_field_widget = CaptchaTextInput
         form_field_enabled_options = ['label', 'error_messages']
@@ -923,6 +937,7 @@ class SubmitButton(FormElement):
     render_template = 'aldryn_forms/submit_button.html'
     name = _('Submit Button')
     model = models.FormButtonPlugin
+    parent_classes = ('FormPlugin',)
 
 
 class SaveProgressButton(SubmitButton):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-06 09:15+0200\n"
+"POT-Creation-Date: 2018-08-27 08:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,16 +55,34 @@ msgstr "jazyk"
 msgid "Include user data"
 msgstr "Doplniť užívateľské dáta"
 
-#: aldryn_forms/admin/forms.py:61
+#: aldryn_forms/admin/forms.py:48
+msgid "Contains name, email, client type, client code"
+msgstr ""
+
+#: aldryn_forms/admin/forms.py:52
+#, fuzzy
+#| msgid "Include user data"
+msgid "include other user data"
+msgstr "Doplniť užívateľské dáta"
+
+#: aldryn_forms/admin/forms.py:53
+msgid ""
+"Contains identification number, phone, address for individual clients and "
+"ico, dic, company name, address for business clients"
+msgstr ""
+
+#: aldryn_forms/admin/forms.py:68
 msgid ""
 "Export failed! More than 65,536 entries found, exceeded Excel limitation!"
-msgstr "Export zlyhal! Našlo sa viac ako 65 536 záznamov, prekrečený limit Excel súboru!"
+msgstr ""
+"Export zlyhal! Našlo sa viac ako 65 536 záznamov, prekrečený limit Excel "
+"súboru!"
 
-#: aldryn_forms/admin/forms.py:136
+#: aldryn_forms/admin/forms.py:143
 msgid "Please select at least one field to export."
 msgstr "Prosím vzberte aspoň jedno políčko na export"
 
-#: aldryn_forms/admin/views.py:69
+#: aldryn_forms/admin/views.py:68
 msgid "No records found"
 msgstr "Nenašli sa žiadne záznamy"
 
@@ -185,7 +203,8 @@ msgstr "Povinné pole"
 msgid ""
 "Thank you for submitting your information, you will be <a href="
 "\"%(form_success_url)s\">redirected shortly</a>."
-msgstr "Ďakujeme za vyplnenie formulára, onedhlo budete presmerovaný <a href="
+msgstr ""
+"Ďakujeme za vyplnenie formulára, onedhlo budete presmerovaný <a href="
 "\"%(form_success_url)s\">redirected shortly</a>."
 
 #: aldryn_forms/boilerplates/bootstrap3/templates/aldryn_forms/form.html:24
@@ -398,7 +417,9 @@ msgstr "Polia"
 #, python-format
 msgid ""
 "File size must be under %(max_size)s. Current file size is %(actual_size)s."
-msgstr "Veľkost súboru musí byť menšia ako %(max_size)s. Aktuálna veľkosť je %(actual_size)s."
+msgstr ""
+"Veľkost súboru musí byť menšia ako %(max_size)s. Aktuálna veľkosť je "
+"%(actual_size)s."
 
 #: aldryn_forms/forms.py:65
 #, python-format
@@ -412,62 +433,68 @@ msgstr ""
 msgid ""
 "Image height must be under %(max_size)s pixels. Current height is "
 "%(actual_size)s pixels."
-msgstr "Veľkosť obrázku musí byť menšia ako %(max_size)s pixelov. Aktuálna veľkosť je %(actual_size)s pixelov."
+msgstr ""
+"Veľkosť obrázku musí byť menšia ako %(max_size)s pixelov. Aktuálna veľkosť "
+"je %(actual_size)s pixelov."
 
-#: aldryn_forms/forms.py:190
+#: aldryn_forms/forms.py:188
 msgid "Please provide CMS page for redirect."
 msgstr "Prosím vyplnte CMS stránku pre presmerovanie."
 
-#: aldryn_forms/forms.py:195
+#: aldryn_forms/forms.py:193
 msgid "Please provide an absolute URL for redirect."
 msgstr "Prosím vyplnte absolútnu URL pre presmerovanie."
 
-#: aldryn_forms/forms.py:239
+#: aldryn_forms/forms.py:237
 msgid "Min value can not be greater than max value."
 msgstr "Minimálna hodnota nesmie byť väčšia ako maximálna hodnotas"
 
-#: aldryn_forms/forms.py:248
+#: aldryn_forms/forms.py:246
 msgid "Min length"
 msgstr "Minimálna dĺžka"
 
-#: aldryn_forms/forms.py:249
+#: aldryn_forms/forms.py:247
 msgid "Required number of characters to type."
 msgstr "Minimálny počet znakov"
 
-#: aldryn_forms/forms.py:251
+#: aldryn_forms/forms.py:249
 msgid "Max length"
 msgstr "Maximálna dĺžka"
 
-#: aldryn_forms/forms.py:252
+#: aldryn_forms/forms.py:250
 msgid "Maximum number of characters to type."
 msgstr "Maximálny počet znakov"
 
-#: aldryn_forms/forms.py:292
+#: aldryn_forms/forms.py:290
 msgid ""
 "Explanatory text displayed next to input field. Just like this one. You can "
 "use MAXSIZE as a placeholder for the maximum size configured below."
 msgstr "Popisný text zobrazený vedľa políčka. Podobne ako tento."
 
-#: aldryn_forms/forms.py:305
-msgid "Popisný text zobrazený vedľa políčka. Podobne ako tento."
+#: aldryn_forms/forms.py:303
+#, fuzzy
+#| msgid ""
+#| "Explanatory text displayed next to input field. Just like this one. You "
+#| "can use MAXSIZE as a placeholder for the maximum size configured below."
+msgid ""
 "Explanatory text displayed next to input field. Just like this one. You can "
 "use MAXSIZE, MAXWIDTH, MAXHEIGHT as a placeholders for the maximum file size "
 "and dimensions configured below."
-msgstr ""
+msgstr "Popisný text zobrazený vedľa políčka. Podobne ako tento."
 
-#: aldryn_forms/forms.py:329
+#: aldryn_forms/forms.py:327
 msgid "Min choices"
 msgstr "Minimálny poceť zvolených možností"
 
-#: aldryn_forms/forms.py:330
+#: aldryn_forms/forms.py:328
 msgid "Required amount of elements to chose."
 msgstr "Minimálny poceť zvolených možností"
 
-#: aldryn_forms/forms.py:332
+#: aldryn_forms/forms.py:330
 msgid "Max choices"
 msgstr "Maximálny poceť zvolených možností"
 
-#: aldryn_forms/forms.py:333
+#: aldryn_forms/forms.py:331
 msgid "Maximum amount of elements to chose."
 msgstr "Maximálny poceť zvolených možností"
 
@@ -548,7 +575,8 @@ msgstr "Pole je povinné"
 msgid ""
 "Error message displayed if the required field is left empty. Default: \"This "
 "field is required\"."
-msgstr "Chybová správa zobrazená ak je poličko prázdne. Predvolená hodnota: \"This "
+msgstr ""
+"Chybová správa zobrazená ak je poličko prázdne. Predvolená hodnota: \"This "
 "field is required\"."
 
 #: aldryn_forms/models.py:372
@@ -559,7 +587,9 @@ msgstr "Predvolený text"
 msgid ""
 "Default text in a form. Disappears when user starts typing. Example: "
 "\"email@example.com\""
-msgstr "Predvolený text políčka. Znizne keď užívateľ začne písať.. Example:\"email@example.com\""
+msgstr ""
+"Predvolený text políčka. Znizne keď užívateľ začne písať.. Example:"
+"\"email@example.com\""
 
 #: aldryn_forms/models.py:379
 msgid "Help text"
@@ -601,7 +631,9 @@ msgstr "Odoslať email, keď je formulár odoslaný"
 msgid ""
 "When checked, the value of this field will be used to send an email "
 "notification."
-msgstr "Keď je formulár odoslaný hodnota tohto políčka je použitá na odoslanie emialu."
+msgstr ""
+"Keď je formulár odoslaný hodnota tohto políčka je použitá na odoslanie "
+"emialu."
 
 #: aldryn_forms/models.py:458
 msgid "email subject"
@@ -637,7 +669,8 @@ msgstr "Maximálna veľkosť súboru"
 msgid ""
 "The maximum file size of the upload, in bytes. You can use common size "
 "suffixes (kB, MB, GB, ...)."
-msgstr "Maximálna veľkosť súboru v bajtoch. Môžete použiť prípony (kB, MB, GB, ...)."
+msgstr ""
+"Maximálna veľkosť súboru v bajtoch. Môžete použiť prípony (kB, MB, GB, ...)."
 
 #: aldryn_forms/models.py:497
 msgid "Maximum image width"
@@ -699,10 +732,12 @@ msgstr "Odoslané formuláre"
 #, python-format
 msgid ""
 "You have to choose at least %(limit_value)d options (chosen %(show_value)d)."
-msgstr "Musíte si zvoliť aspoň %(limit_value)d možností (zvolené %(show_value)d)."
+msgstr ""
+"Musíte si zvoliť aspoň %(limit_value)d možností (zvolené %(show_value)d)."
 
 #: aldryn_forms/validators.py:41
 #, python-format
 msgid ""
-"Nemožete zvoliť viac ako %(limit_value)d možností (zvolené %(show_value)d)."
+"You can't choose more than %(limit_value)d options (chosen %(show_value)d)."
 msgstr ""
+"Musíte si zvoliť aspoň %(limit_value)d možností (zvolené %(show_value)d)."
