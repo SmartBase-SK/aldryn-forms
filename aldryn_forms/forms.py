@@ -151,9 +151,9 @@ class FormSubmissionBaseForm(forms.Form):
 
     def save(self, commit=False):
         if self.request.user.is_authenticated:
-            pdf_file = self.form_plugin.generated_file if hasattr(self.form_plugin, 'generated_file') else None
+            pdf_file = getattr(self, 'generated_file', None)
             if pdf_file:
-                self.instance.file.save(pdf_file['path'], File(open(pdf_file['path'], 'rb')))
+                self.instance.file.save(pdf_file['relative_path'], File(open(pdf_file['path'], 'rb')))
             qs = FormSubmission.objects.filter(user=self.request.user, action='save', form=self.form_plugin)
             if not self.is_valid():
                 qs.filter(sent_at__isnull='save-button' in self.request.POST)

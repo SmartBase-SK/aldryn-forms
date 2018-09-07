@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 import zipfile
 from io import BytesIO
 import os
-from aldryn_forms.models import FormSubmission
+from django.utils.safestring import mark_safe
 
 if six.PY2:
     str_dunder_method = '__unicode__'
@@ -23,7 +23,7 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
     list_display = [str_dunder_method, 'sent_at', 'language']
     list_filter = ['name', 'language']
     readonly_fields = [
-        'file',
+        'file_url',
         'form',
         'user',
         'name',
@@ -34,6 +34,12 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
         'get_recipients_for_display',
     ]
     actions = ['bulk_pdf_download']
+    exclude = ['file']
+
+    def file_url(self, obj):
+        if obj.file:
+            return mark_safe('<a href="' + obj.file.url + '">' + obj.file.name + '</a>')
+        return mark_safe('-')
 
     def bulk_pdf_download(self, request, queryset):
         data_store = BytesIO()

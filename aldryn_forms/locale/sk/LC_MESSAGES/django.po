@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-27 08:47+0200\n"
+"POT-Creation-Date: 2018-09-06 16:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,6 +85,11 @@ msgstr "Prosím vzberte aspoň jedno políčko na export"
 #: aldryn_forms/admin/views.py:68
 msgid "No records found"
 msgstr "Nenašli sa žiadne záznamy"
+
+#: aldryn_forms/apps.py:8 aldryn_forms/cms_apps.py:8
+#: aldryn_forms/cms_plugins.py:55
+msgid "Forms"
+msgstr "Formuláre"
 
 #: aldryn_forms/boilerplates/bootstrap3/templates/admin/aldryn_forms/display/submission_data.html:3
 #: aldryn_forms/boilerplates/legacy/templates/admin/aldryn_forms/display/submission_data.html:3
@@ -208,13 +213,9 @@ msgstr ""
 "\"%(form_success_url)s\">redirected shortly</a>."
 
 #: aldryn_forms/boilerplates/bootstrap3/templates/aldryn_forms/form.html:24
-#: aldryn_forms/cms_plugins.py:244
+#: aldryn_forms/cms_plugins.py:249
 msgid "Thank you for submitting your information."
 msgstr "Ďakujeme za vyplnenie formulára."
-
-#: aldryn_forms/cms_apps.py:8 aldryn_forms/cms_plugins.py:55
-msgid "Forms"
-msgstr "Formuláre"
 
 #: aldryn_forms/cms_plugins.py:64
 msgid "Form"
@@ -224,93 +225,93 @@ msgstr "Formulár"
 msgid "Form types"
 msgstr "Typy formulárov"
 
-#: aldryn_forms/cms_plugins.py:79 aldryn_forms/cms_plugins.py:282
-#: aldryn_forms/cms_plugins.py:457
+#: aldryn_forms/cms_plugins.py:84 aldryn_forms/cms_plugins.py:288
+#: aldryn_forms/cms_plugins.py:464
 #: aldryn_forms/contrib/email_notifications/cms_plugins.py:137
 msgid "Advanced Settings"
 msgstr "Rozšírené nastavenia"
 
-#: aldryn_forms/cms_plugins.py:135
+#: aldryn_forms/cms_plugins.py:140
 msgid "Your information was saved. You can complete it on your next visit."
 msgstr "Informácie boli uložené. Môžete ich doplniť pri ďalšej návšteve."
 
-#: aldryn_forms/cms_plugins.py:273
+#: aldryn_forms/cms_plugins.py:278
 msgid "Fieldset"
 msgstr "Skupina polí"
 
-#: aldryn_forms/cms_plugins.py:310
+#: aldryn_forms/cms_plugins.py:316
 msgid "Form fields"
 msgstr "Formulárove polia"
 
-#: aldryn_forms/cms_plugins.py:531
+#: aldryn_forms/cms_plugins.py:539
 msgid "Text Field"
 msgstr "Textové pole"
 
-#: aldryn_forms/cms_plugins.py:535
+#: aldryn_forms/cms_plugins.py:543
 msgid "Text Area Field"
 msgstr "Rozšírené textové pole"
 
-#: aldryn_forms/cms_plugins.py:576
+#: aldryn_forms/cms_plugins.py:585
 msgid "Hidden Field"
 msgstr "Skryté pole"
 
-#: aldryn_forms/cms_plugins.py:584
+#: aldryn_forms/cms_plugins.py:594
 msgid "Phone Field"
 msgstr "Pole pre telefónne číslo"
 
-#: aldryn_forms/cms_plugins.py:589
+#: aldryn_forms/cms_plugins.py:600
 msgid "Number Field"
 msgstr "Číslene pole"
 
-#: aldryn_forms/cms_plugins.py:594
+#: aldryn_forms/cms_plugins.py:606
 msgid "Email Field"
 msgstr "Pole pre emailovú adresu"
 
-#: aldryn_forms/cms_plugins.py:630
+#: aldryn_forms/cms_plugins.py:643
 msgid "File upload field"
 msgstr "Pole pre súbor"
 
-#: aldryn_forms/cms_plugins.py:710
+#: aldryn_forms/cms_plugins.py:723
 msgid "Image upload field"
 msgstr "Pole pre obrázok"
 
-#: aldryn_forms/cms_plugins.py:748
+#: aldryn_forms/cms_plugins.py:761
 msgid "Yes/No Field"
 msgstr "Pole Áno/Nie"
 
-#: aldryn_forms/cms_plugins.py:772
+#: aldryn_forms/cms_plugins.py:785
 msgid "Yes"
 msgstr "Áno"
 
-#: aldryn_forms/cms_plugins.py:772
+#: aldryn_forms/cms_plugins.py:785
 msgid "No"
 msgstr "Nie"
 
-#: aldryn_forms/cms_plugins.py:780
+#: aldryn_forms/cms_plugins.py:793
 msgid "Select Field"
 msgstr "Pole s výberom"
 
-#: aldryn_forms/cms_plugins.py:816
+#: aldryn_forms/cms_plugins.py:829
 msgid "Multiple Select Field"
 msgstr "Pole s výberom viacerých možností"
 
-#: aldryn_forms/cms_plugins.py:855
+#: aldryn_forms/cms_plugins.py:868
 msgid "Multiple Checkbox Field"
 msgstr "Pole s výberom viacerých checkboxov"
 
-#: aldryn_forms/cms_plugins.py:859
+#: aldryn_forms/cms_plugins.py:872
 msgid "Radio Select Field"
 msgstr "Pole s výberom jednej možnosti"
 
-#: aldryn_forms/cms_plugins.py:902
+#: aldryn_forms/cms_plugins.py:915
 msgid "Captcha Field"
 msgstr "Captcha pole"
 
-#: aldryn_forms/cms_plugins.py:924
+#: aldryn_forms/cms_plugins.py:938
 msgid "Submit Button"
 msgstr "Tlačidlo na odoslanie"
 
-#: aldryn_forms/cms_plugins.py:929
+#: aldryn_forms/cms_plugins.py:944
 msgid "Save button"
 msgstr "Tlačidlo na uloženie"
 
