@@ -276,7 +276,7 @@ class FormPlugin(FieldContainer):
 class Fieldset(FieldContainer):
     render_template = True
     name = _('Fieldset')
-    parent_classes = (FormPlugin,)
+    parent_classes = ('FormPlugin',)
     model = models.FieldsetPlugin
 
     fieldsets = (
