@@ -22,7 +22,7 @@ from sizefield.models import FileSizeField
 from .helpers import is_form_element
 from .utils import ALDRYN_FORMS_ACTION_BACKEND_KEY_MAX_SIZE, action_backend_choices
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from account.models import Consent
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 
@@ -143,6 +143,11 @@ class BaseFormPlugin(CMSPlugin):
         max_length=255,
         choices=FORM_TEMPLATES,
         default=DEFAULT_FORM_TEMPLATE,
+    )
+
+    include_consents = models.BooleanField(
+        verbose_name=_("Include client consents"),
+        default=False,
     )
 
     # Staff notification email settings
@@ -591,6 +596,8 @@ class FormSubmission(models.Model):
         blank=True,
     )
     sent_at = models.DateTimeField(null=True)
+
+    agreed_consents = models.ManyToManyField(to=Consent)
 
     class Meta:
         ordering = ['-sent_at']

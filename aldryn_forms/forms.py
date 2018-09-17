@@ -4,13 +4,15 @@ from django import forms
 from django.conf import settings
 from django.forms.forms import NON_FIELD_ERRORS
 from django.core.files import File
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from sizefield.utils import filesizeformat
 
+from account.models import Consent, UserConsent
 from .models import FormSubmission, FormPlugin
 from .utils import add_form_error, get_user_model
-
+from django.shortcuts import reverse
 from datetime import datetime
 
 
@@ -159,6 +161,8 @@ class FormSubmissionBaseForm(forms.Form):
                 qs.filter(sent_at__isnull='save-button' in self.request.POST)
             qs.delete()
         self.instance.set_form_data(self)
+        if self.consents_form:
+            self.instance.agreed_consents = self.consents_form.get_agreed_consents()
         self.instance.save()
 
 
@@ -333,3 +337,48 @@ class MultipleSelectFieldForm(MinMaxValueForm):
     class Meta:
         # 'required' and 'required_message' depend on min_value field validator
         fields = ['label', 'help_text', 'min_value', 'max_value', 'custom_classes']
+
+
+class ConsentForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ConsentForm, self).__init__(*args, **kwargs)
+        self.fields['consents'] = forms.MultipleChoiceField(
+            widget=forms.CheckboxSelectMultiple(),
+            label=_("Consents"),
+            choices=[self.get_label_for_consent(consent) for consent in self.get_client_consents()],
+            required=False,
+        )
+
+    def clean(self):
+        cleaned_data = super(ConsentForm, self).clean()
+        for con in self.get_client_consents():
+            if 'consents' not in cleaned_data or (con.required and str(con.id) not in cleaned_data['consents']):
+                raise forms.ValidationError(_("Consent \"%(name)s\" is required") % {'name': con.title})
+        return cleaned_data
+
+    def get_label_for_consent(self, consent):
+        client_type = self.user.npcuser.client if hasattr(self.user, 'npcuser') else 'A'
+        if client_type == 'A':
+            client = 'individual'
+        elif client_type == 'B':
+            client = 'individual-business'
+        elif client_type == 'C':
+            client = 'business'
+        consent_url = reverse('account:consent', kwargs={'group': client, 'consent': consent.id})
+        if consent.required:
+            return consent.id, mark_safe(
+                '<a href="{}" onclick="window.open(this.href, \'_blank\', \'resizable=no,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no\'); return false;" >{}<span class="asteriskField">*</span></a>'.format(
+                    consent_url,
+                    consent.title))
+        else:
+            return consent.id, mark_safe(
+                '<a href="{}" onclick="window.open(this.href, \'_blank\', \'resizable=no,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no\'); return false;" >{}</a>'.format(
+                    consent_url, consent.title))
+
+    def get_client_consents(self):
+        client = self.user.npcuser.client if hasattr(self.user, 'npcuser') else 'A'
+        return Consent.objects.filter(intended_for__iexact=client, used_for_event_registration=True)
+
+    def get_agreed_consents(self):
+        return list(Consent.objects.filter(pk__in=self.cleaned_data['consents']))

@@ -32,6 +32,7 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
         'sent_at',
         'action',
         'get_recipients_for_display',
+        'agreed_consents',
     ]
     actions = ['bulk_pdf_download']
     exclude = ['file']

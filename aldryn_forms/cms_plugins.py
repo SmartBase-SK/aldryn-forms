@@ -37,6 +37,7 @@ from .forms import (
     FileFieldForm,
     ImageFieldForm,
     HiddenFieldForm,
+    ConsentForm,
 )
 from .helpers import get_user_name
 from .models import SerializedFormField
@@ -79,6 +80,7 @@ class FormPlugin(FieldContainer):
                 'redirect_type',
                 'redirect_page',
                 'url',
+                'include_consents',
             )
         }),
         (_('Advanced Settings'), {
@@ -131,6 +133,12 @@ class FormPlugin(FieldContainer):
 
         form = form_class(**form_kwargs)
         form.use_required_attribute = False
+        if instance.include_consents:
+            if request.method == 'POST':
+                data = {'consents': form_kwargs['data'].getlist('consents')}
+            else:
+                data = None
+            form.consents_form = ConsentForm(data, user=request.user)
 
         if request.method == 'POST' and 'save-button' in request.POST:
             form.is_valid()
@@ -139,7 +147,11 @@ class FormPlugin(FieldContainer):
             messages.add_message(request, messages.WARNING,
                                  _("Your information was saved. You can complete it on your next visit."))
             return form, True
+
         elif request.method == 'POST' and form.is_valid():
+            if instance.include_consents and not form.consents_form.is_valid():
+                self.form_invalid(instance, request, form)
+                return form, False
             fields = [field for field in form.base_fields.values()
                       if hasattr(field, '_plugin_instance')]
             # pre save field hooks
@@ -224,7 +236,6 @@ class FormPlugin(FieldContainer):
             field_plugin = plugin_instance.get_plugin_class_instance()
             form_fields[field.name] = field_plugin.get_form_field(plugin_instance)
         return form_fields
-
     def get_form_kwargs(self, instance, request):
         kwargs = {
             'form_plugin': instance,
