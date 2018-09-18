@@ -378,7 +378,7 @@ class ConsentForm(forms.Form):
 
     def get_client_consents(self):
         client = self.user.npcuser.client if hasattr(self.user, 'npcuser') else 'A'
-        return Consent.objects.filter(intended_for__iexact=client, used_for_event_registration=True)
+        return Consent.objects.filter(intended_for__iexact=client, used_for=1)
 
     def get_agreed_consents(self):
         return list(Consent.objects.filter(pk__in=self.cleaned_data['consents']))
