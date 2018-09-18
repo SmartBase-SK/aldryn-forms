@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-06 16:13+0200\n"
+"POT-Creation-Date: 2018-09-18 13:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: aldryn_forms/action_backends.py:12 aldryn_forms/models.py:98
-#: aldryn_forms/models.py:512
+#: aldryn_forms/models.py:517
 msgid "Default"
 msgstr "Predvolená hodnota"
 
@@ -31,11 +31,11 @@ msgstr "Iba email"
 msgid "None"
 msgstr "Žiadna"
 
-#: aldryn_forms/admin/base.py:63
+#: aldryn_forms/admin/base.py:70
 msgid "data"
 msgstr "data"
 
-#: aldryn_forms/admin/base.py:80
+#: aldryn_forms/admin/base.py:87
 msgid "people notified"
 msgstr "notifikovaný užívatelia"
 
@@ -57,19 +57,17 @@ msgstr "Doplniť užívateľské dáta"
 
 #: aldryn_forms/admin/forms.py:48
 msgid "Contains name, email, client type, client code"
-msgstr ""
+msgstr "Obsahujú meno, email, typ klienta, klientsky kód"
 
 #: aldryn_forms/admin/forms.py:52
-#, fuzzy
-#| msgid "Include user data"
 msgid "include other user data"
-msgstr "Doplniť užívateľské dáta"
+msgstr "Doplniť ostatné užívateľské dáta"
 
 #: aldryn_forms/admin/forms.py:53
 msgid ""
 "Contains identification number, phone, address for individual clients and "
 "ico, dic, company name, address for business clients"
-msgstr ""
+msgstr "Obsahujú rodné číslo, telefónne číslo, adresu, ičo, dič, názov spoločnosti"
 
 #: aldryn_forms/admin/forms.py:68
 msgid ""
@@ -86,8 +84,8 @@ msgstr "Prosím vzberte aspoň jedno políčko na export"
 msgid "No records found"
 msgstr "Nenašli sa žiadne záznamy"
 
-#: aldryn_forms/apps.py:8 aldryn_forms/cms_apps.py:8
-#: aldryn_forms/cms_plugins.py:55
+#: aldryn_forms/apps.py:7 aldryn_forms/cms_apps.py:8
+#: aldryn_forms/cms_plugins.py:56
 msgid "Forms"
 msgstr "Formuláre"
 
@@ -99,14 +97,14 @@ msgstr "Pole"
 
 #: aldryn_forms/boilerplates/bootstrap3/templates/admin/aldryn_forms/display/submission_data.html:4
 #: aldryn_forms/boilerplates/legacy/templates/admin/aldryn_forms/display/submission_data.html:4
-#: aldryn_forms/models.py:362 aldryn_forms/models.py:536
+#: aldryn_forms/models.py:367 aldryn_forms/models.py:541
 #: aldryn_forms/templates/admin/aldryn_forms/display/submission_data.html:4
 msgid "Label"
 msgstr "Popis"
 
 #: aldryn_forms/boilerplates/bootstrap3/templates/admin/aldryn_forms/display/submission_data.html:5
 #: aldryn_forms/boilerplates/legacy/templates/admin/aldryn_forms/display/submission_data.html:5
-#: aldryn_forms/models.py:511
+#: aldryn_forms/models.py:516
 #: aldryn_forms/templates/admin/aldryn_forms/display/submission_data.html:5
 msgid "Value"
 msgstr "Hodnota"
@@ -213,105 +211,105 @@ msgstr ""
 "\"%(form_success_url)s\">redirected shortly</a>."
 
 #: aldryn_forms/boilerplates/bootstrap3/templates/aldryn_forms/form.html:24
-#: aldryn_forms/cms_plugins.py:249
+#: aldryn_forms/cms_plugins.py:263
 msgid "Thank you for submitting your information."
 msgstr "Ďakujeme za vyplnenie formulára."
 
-#: aldryn_forms/cms_plugins.py:64
+#: aldryn_forms/cms_plugins.py:65
 msgid "Form"
 msgstr "Formulár"
 
-#: aldryn_forms/cms_plugins.py:65
+#: aldryn_forms/cms_plugins.py:66
 msgid "Form types"
 msgstr "Typy formulárov"
 
-#: aldryn_forms/cms_plugins.py:84 aldryn_forms/cms_plugins.py:288
-#: aldryn_forms/cms_plugins.py:464
+#: aldryn_forms/cms_plugins.py:86 aldryn_forms/cms_plugins.py:302
+#: aldryn_forms/cms_plugins.py:478
 #: aldryn_forms/contrib/email_notifications/cms_plugins.py:137
 msgid "Advanced Settings"
 msgstr "Rozšírené nastavenia"
 
-#: aldryn_forms/cms_plugins.py:140
+#: aldryn_forms/cms_plugins.py:151
 msgid "Your information was saved. You can complete it on your next visit."
 msgstr "Informácie boli uložené. Môžete ich doplniť pri ďalšej návšteve."
 
-#: aldryn_forms/cms_plugins.py:278
+#: aldryn_forms/cms_plugins.py:292
 msgid "Fieldset"
 msgstr "Skupina polí"
 
-#: aldryn_forms/cms_plugins.py:316
+#: aldryn_forms/cms_plugins.py:330
 msgid "Form fields"
 msgstr "Formulárove polia"
 
-#: aldryn_forms/cms_plugins.py:539
+#: aldryn_forms/cms_plugins.py:553
 msgid "Text Field"
 msgstr "Textové pole"
 
-#: aldryn_forms/cms_plugins.py:543
+#: aldryn_forms/cms_plugins.py:557
 msgid "Text Area Field"
 msgstr "Rozšírené textové pole"
 
-#: aldryn_forms/cms_plugins.py:585
+#: aldryn_forms/cms_plugins.py:599
 msgid "Hidden Field"
 msgstr "Skryté pole"
 
-#: aldryn_forms/cms_plugins.py:594
+#: aldryn_forms/cms_plugins.py:608
 msgid "Phone Field"
 msgstr "Pole pre telefónne číslo"
 
-#: aldryn_forms/cms_plugins.py:600
+#: aldryn_forms/cms_plugins.py:614
 msgid "Number Field"
 msgstr "Číslene pole"
 
-#: aldryn_forms/cms_plugins.py:606
+#: aldryn_forms/cms_plugins.py:620
 msgid "Email Field"
 msgstr "Pole pre emailovú adresu"
 
-#: aldryn_forms/cms_plugins.py:643
+#: aldryn_forms/cms_plugins.py:657
 msgid "File upload field"
 msgstr "Pole pre súbor"
 
-#: aldryn_forms/cms_plugins.py:723
+#: aldryn_forms/cms_plugins.py:737
 msgid "Image upload field"
 msgstr "Pole pre obrázok"
 
-#: aldryn_forms/cms_plugins.py:761
+#: aldryn_forms/cms_plugins.py:775
 msgid "Yes/No Field"
 msgstr "Pole Áno/Nie"
 
-#: aldryn_forms/cms_plugins.py:785
+#: aldryn_forms/cms_plugins.py:799
 msgid "Yes"
 msgstr "Áno"
 
-#: aldryn_forms/cms_plugins.py:785
+#: aldryn_forms/cms_plugins.py:799
 msgid "No"
 msgstr "Nie"
 
-#: aldryn_forms/cms_plugins.py:793
+#: aldryn_forms/cms_plugins.py:807
 msgid "Select Field"
 msgstr "Pole s výberom"
 
-#: aldryn_forms/cms_plugins.py:829
+#: aldryn_forms/cms_plugins.py:843
 msgid "Multiple Select Field"
 msgstr "Pole s výberom viacerých možností"
 
-#: aldryn_forms/cms_plugins.py:868
+#: aldryn_forms/cms_plugins.py:882
 msgid "Multiple Checkbox Field"
 msgstr "Pole s výberom viacerých checkboxov"
 
-#: aldryn_forms/cms_plugins.py:872
+#: aldryn_forms/cms_plugins.py:886
 msgid "Radio Select Field"
 msgstr "Pole s výberom jednej možnosti"
 
-#: aldryn_forms/cms_plugins.py:915
+#: aldryn_forms/cms_plugins.py:929
 msgid "Captcha Field"
 msgstr "Captcha pole"
 
-#: aldryn_forms/cms_plugins.py:938
+#: aldryn_forms/cms_plugins.py:952
 msgid "Submit Button"
 msgstr "Tlačidlo na odoslanie"
 
-#: aldryn_forms/cms_plugins.py:944
+#: aldryn_forms/cms_plugins.py:958
 msgid "Save button"
 msgstr "Tlačidlo na uloženie"
 
@@ -324,7 +322,7 @@ msgid "new email notifications"
 msgstr "nová emailová notifikácie"
 
 #: aldryn_forms/contrib/email_notifications/cms_plugins.py:51
-#: aldryn_forms/models.py:151
+#: aldryn_forms/models.py:156
 msgid "Recipients"
 msgstr "Príjemcovia"
 
@@ -414,7 +412,7 @@ msgstr "Prosím vypĺnte príjemcu"
 msgid "Fields"
 msgstr "Polia"
 
-#: aldryn_forms/forms.py:30
+#: aldryn_forms/forms.py:32
 #, python-format
 msgid ""
 "File size must be under %(max_size)s. Current file size is %(actual_size)s."
@@ -422,14 +420,14 @@ msgstr ""
 "Veľkost súboru musí byť menšia ako %(max_size)s. Aktuálna veľkosť je "
 "%(actual_size)s."
 
-#: aldryn_forms/forms.py:65
+#: aldryn_forms/forms.py:67
 #, python-format
 msgid ""
 "Image width must be under %(max_size)s pixels. Current width is "
 "%(actual_size)s pixels."
 msgstr ""
 
-#: aldryn_forms/forms.py:75
+#: aldryn_forms/forms.py:77
 #, python-format
 msgid ""
 "Image height must be under %(max_size)s pixels. Current height is "
@@ -438,68 +436,71 @@ msgstr ""
 "Veľkosť obrázku musí byť menšia ako %(max_size)s pixelov. Aktuálna veľkosť "
 "je %(actual_size)s pixelov."
 
-#: aldryn_forms/forms.py:188
+#: aldryn_forms/forms.py:192
 msgid "Please provide CMS page for redirect."
 msgstr "Prosím vyplnte CMS stránku pre presmerovanie."
 
-#: aldryn_forms/forms.py:193
+#: aldryn_forms/forms.py:197
 msgid "Please provide an absolute URL for redirect."
 msgstr "Prosím vyplnte absolútnu URL pre presmerovanie."
 
-#: aldryn_forms/forms.py:237
+#: aldryn_forms/forms.py:241
 msgid "Min value can not be greater than max value."
 msgstr "Minimálna hodnota nesmie byť väčšia ako maximálna hodnotas"
 
-#: aldryn_forms/forms.py:246
+#: aldryn_forms/forms.py:250
 msgid "Min length"
 msgstr "Minimálna dĺžka"
 
-#: aldryn_forms/forms.py:247
+#: aldryn_forms/forms.py:251
 msgid "Required number of characters to type."
 msgstr "Minimálny počet znakov"
 
-#: aldryn_forms/forms.py:249
+#: aldryn_forms/forms.py:253
 msgid "Max length"
 msgstr "Maximálna dĺžka"
 
-#: aldryn_forms/forms.py:250
+#: aldryn_forms/forms.py:254
 msgid "Maximum number of characters to type."
 msgstr "Maximálny počet znakov"
 
-#: aldryn_forms/forms.py:290
+#: aldryn_forms/forms.py:294
 msgid ""
 "Explanatory text displayed next to input field. Just like this one. You can "
 "use MAXSIZE as a placeholder for the maximum size configured below."
 msgstr "Popisný text zobrazený vedľa políčka. Podobne ako tento."
 
-#: aldryn_forms/forms.py:303
-#, fuzzy
-#| msgid ""
-#| "Explanatory text displayed next to input field. Just like this one. You "
-#| "can use MAXSIZE as a placeholder for the maximum size configured below."
+#: aldryn_forms/forms.py:307
 msgid ""
-"Explanatory text displayed next to input field. Just like this one. You can "
-"use MAXSIZE, MAXWIDTH, MAXHEIGHT as a placeholders for the maximum file size "
-"and dimensions configured below."
+"Explanatory text displayed next to input field. Just like this one."
 msgstr "Popisný text zobrazený vedľa políčka. Podobne ako tento."
 
-#: aldryn_forms/forms.py:327
+#: aldryn_forms/forms.py:331
 msgid "Min choices"
 msgstr "Minimálny poceť zvolených možností"
 
-#: aldryn_forms/forms.py:328
+#: aldryn_forms/forms.py:332
 msgid "Required amount of elements to chose."
 msgstr "Minimálny poceť zvolených možností"
 
-#: aldryn_forms/forms.py:330
+#: aldryn_forms/forms.py:334
 msgid "Max choices"
 msgstr "Maximálny poceť zvolených možností"
 
-#: aldryn_forms/forms.py:331
+#: aldryn_forms/forms.py:335
 msgid "Maximum amount of elements to chose."
 msgstr "Maximálny poceť zvolených možností"
 
-#: aldryn_forms/models.py:106 aldryn_forms/models.py:170
+#: aldryn_forms/forms.py:348
+msgid "Consents"
+msgstr "Súhlasy"
+
+#: aldryn_forms/forms.py:357
+#, python-format
+msgid "Consent \"%(name)s\" is required"
+msgstr "Položka \"%(name)s\" je povinná"
+
+#: aldryn_forms/models.py:106 aldryn_forms/models.py:175
 msgid "CMS Page"
 msgstr "CMS stránka"
 
@@ -507,7 +508,7 @@ msgstr "CMS stránka"
 msgid "Absolute URL"
 msgstr "Absolútna URL"
 
-#: aldryn_forms/models.py:114 aldryn_forms/models.py:357
+#: aldryn_forms/models.py:114 aldryn_forms/models.py:362
 msgid "Name"
 msgstr "Meno"
 
@@ -515,7 +516,7 @@ msgstr "Meno"
 msgid "Used to filter out form submissions."
 msgstr "Používané pri filtrovaní odoslaných formulárov"
 
-#: aldryn_forms/models.py:119 aldryn_forms/models.py:365
+#: aldryn_forms/models.py:119 aldryn_forms/models.py:370
 msgid "Error message"
 msgstr "Chybová správa"
 
@@ -539,8 +540,8 @@ msgstr "Presmerovať na"
 msgid "Where to redirect the user when the form has been successfully sent?"
 msgstr "Kde má byť užívateľ presmerovaný po úspešnom odoslaní formulára"
 
-#: aldryn_forms/models.py:140 aldryn_forms/models.py:347
-#: aldryn_forms/models.py:412 aldryn_forms/models.py:538
+#: aldryn_forms/models.py:140 aldryn_forms/models.py:352
+#: aldryn_forms/models.py:417 aldryn_forms/models.py:543
 msgid "custom css classes"
 msgstr "Dodatočné css triedy"
 
@@ -548,31 +549,35 @@ msgstr "Dodatočné css triedy"
 msgid "form template"
 msgstr "Šablóna formulára"
 
-#: aldryn_forms/models.py:154
+#: aldryn_forms/models.py:149
+msgid "Include client consents"
+msgstr "Pridať súhlasy a vźhlasenia"
+
+#: aldryn_forms/models.py:159
 msgid "People who will get the form content via e-mail."
 msgstr "Ľudia, ktorí dostanú obsah formulára prostredníctvom emailu."
 
-#: aldryn_forms/models.py:158
+#: aldryn_forms/models.py:163
 msgid "Action backend"
 msgstr "Akcie"
 
-#: aldryn_forms/models.py:165 aldryn_forms/models.py:386
+#: aldryn_forms/models.py:170 aldryn_forms/models.py:391
 msgid "Attributes"
 msgstr "Atribúty"
 
-#: aldryn_forms/models.py:345
+#: aldryn_forms/models.py:350
 msgid "Legend"
 msgstr "Legenda"
 
-#: aldryn_forms/models.py:359
+#: aldryn_forms/models.py:364
 msgid "Used to set the field name"
 msgstr "Použité pri nastavení mena políčka"
 
-#: aldryn_forms/models.py:363
+#: aldryn_forms/models.py:368
 msgid "Field is required"
 msgstr "Pole je povinné"
 
-#: aldryn_forms/models.py:368
+#: aldryn_forms/models.py:373
 msgid ""
 "Error message displayed if the required field is left empty. Default: \"This "
 "field is required\"."
@@ -580,11 +585,11 @@ msgstr ""
 "Chybová správa zobrazená ak je poličko prázdne. Predvolená hodnota: \"This "
 "field is required\"."
 
-#: aldryn_forms/models.py:372
+#: aldryn_forms/models.py:377
 msgid "Placeholder text"
 msgstr "Predvolený text"
 
-#: aldryn_forms/models.py:375
+#: aldryn_forms/models.py:380
 msgid ""
 "Default text in a form. Disappears when user starts typing. Example: "
 "\"email@example.com\""
@@ -592,43 +597,39 @@ msgstr ""
 "Predvolený text políčka. Znizne keď užívateľ začne písať.. Example:"
 "\"email@example.com\""
 
-#: aldryn_forms/models.py:379
+#: aldryn_forms/models.py:384
 msgid "Help text"
 msgstr "Pomocný text"
 
-#: aldryn_forms/models.py:382
-msgid "Explanatory text displayed next to input field. Just like this one."
-msgstr "Vysvetľujúci text zobrazený vedľa políčka. Podobne ako tento."
-
-#: aldryn_forms/models.py:394
+#: aldryn_forms/models.py:399
 msgid "Min value"
 msgstr "Minimálna hodnota"
 
-#: aldryn_forms/models.py:400
+#: aldryn_forms/models.py:405
 msgid "Max value"
 msgstr "Maximálna hodnota"
 
-#: aldryn_forms/models.py:405
+#: aldryn_forms/models.py:410
 msgid "Initial value"
 msgstr "Počiatočná hodnota"
 
-#: aldryn_forms/models.py:408
+#: aldryn_forms/models.py:413
 msgid "Default value of field."
 msgstr "Predvolená hodnota políčka."
 
-#: aldryn_forms/models.py:445
+#: aldryn_forms/models.py:450
 msgid "columns"
 msgstr "stĺpce"
 
-#: aldryn_forms/models.py:447
+#: aldryn_forms/models.py:452
 msgid "rows"
 msgstr "riadky"
 
-#: aldryn_forms/models.py:452
+#: aldryn_forms/models.py:457
 msgid "send notification when form is submitted"
 msgstr "Odoslať email, keď je formulár odoslaný"
 
-#: aldryn_forms/models.py:454
+#: aldryn_forms/models.py:459
 msgid ""
 "When checked, the value of this field will be used to send an email "
 "notification."
@@ -636,96 +637,96 @@ msgstr ""
 "Keď je formulár odoslaný hodnota tohto políčka je použitá na odoslanie "
 "emialu."
 
-#: aldryn_forms/models.py:458
+#: aldryn_forms/models.py:463
 msgid "email subject"
 msgstr "Premdet emailu"
 
-#: aldryn_forms/models.py:462
+#: aldryn_forms/models.py:467
 msgid "Used as the email subject when email_send_notification is checked."
 msgstr "Použité ako predmet emailu."
 
-#: aldryn_forms/models.py:466
+#: aldryn_forms/models.py:471
 msgid "Additional email body"
 msgstr "Doplnkový obsah emailu"
 
-#: aldryn_forms/models.py:469
+#: aldryn_forms/models.py:474
 msgid "Additional body text used when email notifications are active."
 msgstr "Doplnkový obsah emailu"
 
-#: aldryn_forms/models.py:476
+#: aldryn_forms/models.py:481
 msgid "Upload files to"
 msgstr "Uploadovať súbory do"
 
-#: aldryn_forms/models.py:477
+#: aldryn_forms/models.py:482
 msgid ""
 "Select a folder to which all files submitted through this field will be "
 "uploaded to."
 msgstr "Vyberte priečinok, do ktorého budú uložené odoslané súbory."
 
-#: aldryn_forms/models.py:481
+#: aldryn_forms/models.py:486
 msgid "Maximum file size"
 msgstr "Maximálna veľkosť súboru"
 
-#: aldryn_forms/models.py:483
+#: aldryn_forms/models.py:488
 msgid ""
 "The maximum file size of the upload, in bytes. You can use common size "
 "suffixes (kB, MB, GB, ...)."
 msgstr ""
 "Maximálna veľkosť súboru v bajtoch. Môžete použiť prípony (kB, MB, GB, ...)."
 
-#: aldryn_forms/models.py:497
+#: aldryn_forms/models.py:502
 msgid "Maximum image width"
 msgstr "Maximálna šírka obrázka"
 
-#: aldryn_forms/models.py:499
+#: aldryn_forms/models.py:504
 msgid "The maximum width of the uploaded image, in pixels."
 msgstr "Maximálna šírka obrázkav pixeloch"
 
-#: aldryn_forms/models.py:502
+#: aldryn_forms/models.py:507
 msgid "Maximum image height"
 msgstr "Maximálna výška obrázka"
 
-#: aldryn_forms/models.py:504
+#: aldryn_forms/models.py:509
 msgid "The maximum height of the uploaded image, in pixels."
 msgstr "Maximálna výška obrázka v pixeloch"
 
-#: aldryn_forms/models.py:513
+#: aldryn_forms/models.py:518
 msgid "Position"
 msgstr "Pozícia"
 
-#: aldryn_forms/models.py:516
+#: aldryn_forms/models.py:521
 msgid "Option"
 msgstr "Možnosť"
 
-#: aldryn_forms/models.py:517
+#: aldryn_forms/models.py:522
 msgid "Options"
 msgstr "Možnosti"
 
-#: aldryn_forms/models.py:571
+#: aldryn_forms/models.py:576
 msgid "form name"
 msgstr "Názov formulára"
 
-#: aldryn_forms/models.py:577
+#: aldryn_forms/models.py:582
 msgid "users notified"
 msgstr "Nitifikovaní užívatelia"
 
-#: aldryn_forms/models.py:579
+#: aldryn_forms/models.py:584
 msgid "People who got a notification when form was submitted."
 msgstr "Ľudia, ktorí dostanú notifikáciu po odoslaní formulára."
 
-#: aldryn_forms/models.py:583
+#: aldryn_forms/models.py:588
 msgid "form language"
 msgstr "Jazyk formulára"
 
-#: aldryn_forms/models.py:589
+#: aldryn_forms/models.py:594
 msgid "form url"
 msgstr "URL formulára"
 
-#: aldryn_forms/models.py:597
+#: aldryn_forms/models.py:604
 msgid "Form submission"
 msgstr "Odoslaný formulár"
 
-#: aldryn_forms/models.py:598
+#: aldryn_forms/models.py:605
 msgid "Form submissions"
 msgstr "Odoslané formuláre"
 
