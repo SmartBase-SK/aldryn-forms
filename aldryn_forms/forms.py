@@ -161,7 +161,7 @@ class FormSubmissionBaseForm(forms.Form):
                 qs.filter(sent_at__isnull='save-button' in self.request.POST)
             qs.delete()
         self.instance.set_form_data(self)
-        if self.consents_form:
+        if self.consents_form and 'save-button' not in self.request.POST:
             self.instance.agreed_consents = self.consents_form.get_agreed_consents()
         self.instance.save()
 

@@ -141,6 +141,9 @@ class FormPlugin(FieldContainer):
             form.consents_form = ConsentForm(data, user=request.user)
 
         if request.method == 'POST' and 'save-button' in request.POST:
+            if instance.include_consents and not form.consents_form.is_valid():
+                self.form_invalid(instance, request, form)
+                return form, False
             form.is_valid()
             form._errors = {}
             form.save()
