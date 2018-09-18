@@ -364,7 +364,7 @@ class FieldPluginBase(CMSPlugin):
         help_text=_('Used to set the field name'),
         blank=True,
     )
-    label = models.CharField(_('Label'), max_length=255, blank=True)
+    label = models.CharField(_('Label'), max_length=500, blank=True)
     required = models.BooleanField(_('Field is required'), default=False)
     required_message = models.TextField(
         verbose_name=_('Error message'),
