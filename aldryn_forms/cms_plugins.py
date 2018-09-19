@@ -34,6 +34,7 @@ from .forms import (
     SelectFieldForm,
     CaptchaFieldForm,
     RadioFieldForm,
+    ButtonForm,
     FileFieldForm,
     ImageFieldForm,
     HiddenFieldForm,
@@ -77,9 +78,6 @@ class FormPlugin(FieldContainer):
         (None, {
             'fields': (
                 'name',
-                'redirect_type',
-                'redirect_page',
-                'url',
                 'include_consents',
             )
         }),
@@ -92,7 +90,6 @@ class FormPlugin(FieldContainer):
                 'success_message',
                 'recipients',
                 'action_backend',
-                'custom_classes',
                 'form_attributes',
             )
         }),
@@ -303,12 +300,6 @@ class Fieldset(FieldContainer):
                 'legend',
             )
         }),
-        (_('Advanced Settings'), {
-            'classes': ('collapse',),
-            'fields': (
-                'custom_classes',
-            )
-        }),
     )
 
     def get_render_template(self, context, instance, placeholder):
@@ -345,7 +336,6 @@ class Field(FormElement):
         'name',
         'help_text',
         'required',
-        'attributes',
     ]
     form_field_disabled_options = []
 
@@ -357,11 +347,9 @@ class Field(FormElement):
         'required',
     ]
     fieldset_advanced_fields = [
-        'attributes',
         'help_text',
         ('min_value', 'max_value',),
         'required_message',
-        'custom_classes',
     ]
 
     def serialize_value(self, instance, value, is_confirmation=False):
@@ -574,7 +562,6 @@ class TextAreaField(BaseTextField):
         'help_text',
         ('min_value', 'max_value',),
         'required_message',
-        'custom_classes',
     ]
 
     def get_form_field_widget(self, instance):
@@ -677,7 +664,6 @@ class FileField(Field):
     fieldset_advanced_fields = [
         'help_text',
         'max_size',
-        'required_message',
         'custom_classes',
     ]
 
@@ -752,7 +738,6 @@ class ImageField(FileField):
         'max_size',
         ('max_width', 'max_height',),
         'required_message',
-        'custom_classes',
     ]
 
     def get_form_field_kwargs(self, instance):
@@ -784,7 +769,6 @@ class BooleanField(Field):
     form_field_enabled_options = [
         'label',
         'name',
-        'attributes',
         'help_text',
         'required',
         'error_messages',
@@ -793,10 +777,8 @@ class BooleanField(Field):
         'label', 'name', 'required',
     ]
     fieldset_advanced_fields = [
-        'attributes',
         'help_text',
         'required_message',
-        'custom_classes',
     ]
 
     def serialize_value(self, instance, value, is_confirmation=False):
@@ -816,7 +798,6 @@ class SelectField(Field):
     form_field_enabled_options = [
         'label',
         'name',
-        'attributes',
         'help_text',
         'required',
         'error_messages',
@@ -825,10 +806,8 @@ class SelectField(Field):
         'label', 'name', 'required',
     ]
     fieldset_advanced_fields = [
-        'attributes',
         'help_text',
         'required_message',
-        'custom_classes',
     ]
 
     inlines = [SelectOptionInline]
@@ -852,7 +831,6 @@ class MultipleSelectField(SelectField):
     form_field_enabled_options = [
         'label',
         'name',
-        'attributes',
         'help_text',
         'required',
         'validators',
@@ -861,7 +839,6 @@ class MultipleSelectField(SelectField):
         'label', 'name', 'required',
     ]
     fieldset_advanced_fields = [
-        'attributes',
         ('min_value', 'max_value'),
     ]
 
@@ -895,7 +872,6 @@ class RadioSelectField(Field):
     form_field_enabled_options = [
         'label',
         'name',
-        'attributes',
         'help_text',
         'required',
         'error_messages',
@@ -904,10 +880,8 @@ class RadioSelectField(Field):
         'label', 'name', 'required',
     ]
     fieldset_advanced_fields = [
-        'attributes',
         'help_text',
         'required_message',
-        'custom_classes',
     ]
 
     inlines = [SelectOptionInline]
@@ -956,6 +930,7 @@ class SubmitButton(FormElement):
     name = _('Submit Button')
     model = models.FormButtonPlugin
     parent_classes = ('FormPlugin', 'Fieldset')
+    form = ButtonForm
 
 
 class SaveProgressButton(SubmitButton):

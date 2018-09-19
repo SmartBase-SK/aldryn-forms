@@ -179,6 +179,7 @@ class BaseFormPlugin(CMSPlugin):
     )
 
     form_detail_field = RichTextUploadingField(
+        verbose_name=_("Form detail"),
         null=True,
         blank=True,
     )

@@ -213,17 +213,17 @@ class BooleanFieldForm(forms.ModelForm):
         super(BooleanFieldForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        fields = ['label', 'help_text', 'required', 'required_message', 'custom_classes']
+        fields = ['label', 'help_text', 'required', 'required_message']
 
 
 class SelectFieldForm(forms.ModelForm):
     class Meta:
-        fields = ['label', 'help_text', 'required', 'required_message', 'custom_classes']
+        fields = ['label', 'help_text', 'required', 'required_message']
 
 
 class RadioFieldForm(forms.ModelForm):
     class Meta:
-        fields = ['label', 'help_text', 'required', 'required_message', 'custom_classes']
+        fields = ['label', 'help_text', 'required', 'required_message']
 
 
 class CaptchaFieldForm(forms.ModelForm):
@@ -231,6 +231,10 @@ class CaptchaFieldForm(forms.ModelForm):
         # captcha is always required
         fields = ['label', 'help_text', 'required_message']
 
+
+class ButtonForm(forms.ModelForm):
+    class Meta:
+        fields = ['label']
 
 class MinMaxValueForm(ExtandableErrorForm):
 
@@ -256,7 +260,7 @@ class TextFieldForm(MinMaxValueForm):
 
     class Meta:
         fields = ['label', 'placeholder_text', 'help_text',
-                  'min_value', 'max_value', 'required', 'required_message', 'custom_classes']
+                  'min_value', 'max_value', 'required', 'required_message']
 
 
 class HiddenFieldForm(ExtandableErrorForm):
@@ -283,7 +287,6 @@ class EmailFieldForm(TextFieldForm):
             'email_send_notification',
             'email_subject',
             'email_body',
-            'custom_classes',
         ]
 
 
@@ -296,8 +299,7 @@ class FileFieldForm(forms.ModelForm):
             'configured below.')
 
     class Meta:
-        fields = ['label', 'help_text', 'required', 'required_message',
-                  'custom_classes', 'upload_to', 'max_size']
+        fields = ['label', 'help_text', 'required', 'required_message', 'upload_to', 'max_size']
 
 
 class ImageFieldForm(forms.ModelForm):
@@ -320,7 +322,7 @@ class TextAreaFieldForm(TextFieldForm):
 
     class Meta:
         fields = ['label', 'placeholder_text', 'help_text', 'text_area_columns',
-                  'text_area_rows', 'min_value', 'max_value', 'required', 'required_message', 'custom_classes']
+                  'text_area_rows', 'min_value', 'max_value', 'required', 'required_message']
 
 
 class MultipleSelectFieldForm(MinMaxValueForm):
@@ -336,7 +338,7 @@ class MultipleSelectFieldForm(MinMaxValueForm):
 
     class Meta:
         # 'required' and 'required_message' depend on min_value field validator
-        fields = ['label', 'help_text', 'min_value', 'max_value', 'custom_classes']
+        fields = ['label', 'help_text', 'min_value', 'max_value']
 
 
 class ConsentForm(forms.Form):
