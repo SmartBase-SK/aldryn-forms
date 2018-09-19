@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from PIL import Image
 from django import forms
 from django.conf import settings
-from django.forms.forms import NON_FIELD_ERRORS
 from django.core.files import File
+from django.forms.forms import NON_FIELD_ERRORS
+from django.shortcuts import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, ugettext_lazy as _
-
 from sizefield.utils import filesizeformat
 
-from account.models import Consent, UserConsent
+from account.models import Consent
 from .models import FormSubmission, FormPlugin
 from .utils import add_form_error, get_user_model
-from django.shortcuts import reverse
-from datetime import datetime
 
 
 class FileSizeCheckMixin(object):
@@ -235,6 +235,7 @@ class CaptchaFieldForm(forms.ModelForm):
 class ButtonForm(forms.ModelForm):
     class Meta:
         fields = ['label']
+
 
 class MinMaxValueForm(ExtandableErrorForm):
 

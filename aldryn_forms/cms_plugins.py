@@ -1,25 +1,22 @@
 # -*- coding: utf-8 -*-
-from PIL import Image
+import json
 
+from PIL import Image
+from cms.plugin_base import CMSPluginBase
+from cms.plugin_pool import plugin_pool
 from django import forms
-from django.db.models import query
 from django.contrib import messages
 from django.contrib.admin import TabularInline
 from django.core.validators import MinLengthValidator
+from django.db.models import query
 from django.template.loader import select_template
 from django.utils.safestring import mark_safe
 from django.utils.six import text_type
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.http import HttpResponseBadRequest
-
-from cms.plugin_base import CMSPluginBase
-from cms.plugin_pool import plugin_pool
-
 from emailit.api import send_mail
-
 from filer.models import filemodels, imagemodels
 from sizefield.utils import filesizeformat
-import json
+
 from . import models
 from .forms import (
     RestrictedFileField,
@@ -43,7 +40,7 @@ from .forms import (
 from .helpers import get_user_name
 from .models import SerializedFormField
 from .signals import form_pre_save, form_post_save
-from .utils import get_action_backends, get_plugin_tree
+from .utils import get_action_backends
 from .validators import (
     is_valid_recipient,
     MinChoicesValidator,
@@ -236,6 +233,7 @@ class FormPlugin(FieldContainer):
             field_plugin = plugin_instance.get_plugin_class_instance()
             form_fields[field.name] = field_plugin.get_form_field(plugin_instance)
         return form_fields
+
     def get_form_kwargs(self, instance, request):
         kwargs = {
             'form_plugin': instance,
