@@ -11,6 +11,7 @@ import zipfile
 from io import BytesIO
 import os
 from django.utils.safestring import mark_safe
+from aldryn_forms.models import FormSubmission
 
 if six.PY2:
     str_dunder_method = '__unicode__'
@@ -18,10 +19,40 @@ else:
     str_dunder_method = '__str__'
 
 
+class InputFilter(admin.SimpleListFilter):
+    template = 'admin/aldryn_forms/input_filter.html'
+    title = _("Name")
+    parameter_name = 'name'
+    options = set(FormSubmission.objects.all().values_list('name', flat=True))
+
+    def __init__(self, request, params, model, model_admin):
+        super().__init__(request, params, model, model_admin)
+        self.selected = self.value()
+
+    def lookups(self, request, model_admin):
+        # Dummy, required to show the filter.
+        return ((),)
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(name__icontains=self.value().strip())
+        return queryset
+
+    def choices(self, changelist):
+        # Grab only the "all" option.
+        all_choices = next(super().choices(changelist))
+        all_choices['query_parts'] = (
+            (k, v)
+            for k, v in changelist.get_filters_params().items()
+            if k != self.parameter_name
+        )
+        yield all_choices
+
+
 class BaseFormSubmissionAdmin(admin.ModelAdmin):
     date_hierarchy = 'sent_at'
     list_display = [str_dunder_method, 'sent_at', 'language']
-    list_filter = ['name', 'language']
+    list_filter = [InputFilter, 'language']
     readonly_fields = [
         'file_url',
         'form',

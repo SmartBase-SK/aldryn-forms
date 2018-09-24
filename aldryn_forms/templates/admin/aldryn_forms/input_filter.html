@@ -1,0 +1,42 @@
+{% load i18n sekizai_tags static %}
+
+<h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+
+<link rel="stylesheet" type="text/css" href="{% static 'select2.min.css' %}">
+
+<script src="{% static 'third_party/jquery/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'select2.full.min.js' %}"></script>
+
+<ul>
+    <li>
+        {% with choices.0 as all_choices %}
+            <form method="GET" action="">
+
+                {% for k, v in all_choices.query_parts %}
+                    <input type="hidden" name="{{ k }}" value="{{ v }}"/>
+                {% endfor %}
+
+                <select type="text"
+                        id="name-filter"
+                        value="{{ spec.value|default_if_none:'' }}"
+                        name="{{ spec.parameter_name }}">
+
+                    <option disabled {% if all_choices.selected %}selected{% endif %}>--- Vyberte možnosť ---</option>
+                    {% for opt in spec.options %}
+                        <option value="{{ opt }} {% if opt == spec.selected %}selected{% endif %}">{{ opt }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if not all_choices.selected %}
+                    <strong><a href="{{ all_choices.query_string }}">&times; {% trans 'Remove' %}</a></strong>
+                {% endif %}
+
+            </form>
+        {% endwith %}
+    </li>
+</ul>
+<script>
+    $('#name-filter').select2().on('select2:select', function (e) {
+        $(this).closest('form').submit()
+    })
+</script>
