@@ -36,7 +36,7 @@
     </li>
 </ul>
 <script>
-    $('#name-filter').select2().on('select2:select', function (e) {
+    $('#name-filter').select2({'width':'115%', 'dropdownAutoWidth':true}).on('select2:select', function (e) {
         $(this).closest('form').submit()
     })
 </script>

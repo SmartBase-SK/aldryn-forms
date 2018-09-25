@@ -21,7 +21,7 @@ else:
 
 class InputFilter(admin.SimpleListFilter):
     template = 'admin/aldryn_forms/input_filter.html'
-    title = _("Name")
+    title = _("form")
     parameter_name = 'name'
     options = set(FormSubmission.objects.all().values_list('name', flat=True))
 

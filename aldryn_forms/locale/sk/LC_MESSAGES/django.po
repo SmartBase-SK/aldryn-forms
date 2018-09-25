@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-19 14:52+0200\n"
+"POT-Creation-Date: 2018-09-25 08:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,11 +31,15 @@ msgstr "Iba email"
 msgid "None"
 msgstr "Žiadna"
 
-#: aldryn_forms/admin/base.py:70
+#: aldryn_forms/admin/base.py:24
+msgid "form"
+msgstr "formulára"
+
+#: aldryn_forms/admin/base.py:101
 msgid "data"
 msgstr "data"
 
-#: aldryn_forms/admin/base.py:87
+#: aldryn_forms/admin/base.py:118
 msgid "people notified"
 msgstr "notifikovaný užívatelia"
 
@@ -85,7 +89,7 @@ msgstr "Prosím vzberte aspoň jedno políčko na export"
 msgid "No records found"
 msgstr "Nenašli sa žiadne záznamy"
 
-#: aldryn_forms/apps.py:7 aldryn_forms/cms_apps.py:8
+#: aldryn_forms/apps.py:8 aldryn_forms/cms_apps.py:8
 #: aldryn_forms/cms_plugins.py:54
 msgid "Forms"
 msgstr "Formuláre"
@@ -743,6 +747,15 @@ msgstr "Odoslaný formulár"
 #: aldryn_forms/models.py:606
 msgid "Form submissions"
 msgstr "Odoslané formuláre"
+
+#: aldryn_forms/templates/admin/aldryn_forms/input_filter.html:3
+#, python-format
+msgid " By %(filter_title)s "
+msgstr "Podľa %(filter_title)s "
+
+#: aldryn_forms/templates/admin/aldryn_forms/input_filter.html:31
+msgid "Remove"
+msgstr "Odstrániť"
 
 #: aldryn_forms/validators.py:35
 #, python-format
