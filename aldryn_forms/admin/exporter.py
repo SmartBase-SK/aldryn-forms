@@ -52,11 +52,12 @@ class Exporter(object):
         return ["", "", ""] + data
 
     def include_user_data(self, submission, data):
-        user_attrs = ['first_name', 'last_name', 'email', 'client', 'client_code']
+        user_attrs = ['first_name', 'last_name', 'email', 'client']
         user_data = []
         if hasattr(submission, 'user') and hasattr(submission.user, 'npcuser'):
             for attr in user_attrs:
                 user_data.append(getattr(submission.user.npcuser, attr, ""))
+            user_data.append(submission.user.npcuser.client_code())
         return user_data + data
 
     def include_extended_user_data(self, submission, data):
