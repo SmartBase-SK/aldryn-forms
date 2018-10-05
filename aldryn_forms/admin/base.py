@@ -23,7 +23,7 @@ class InputFilter(admin.SimpleListFilter):
     template = 'admin/aldryn_forms/input_filter.html'
     title = _("form")
     parameter_name = 'name'
-    options = set(FormSubmission.objects.all().values_list('name', flat=True))
+    options = set(FormSubmission.objects.filter(action='submit').values_list('name', flat=True))
 
     def __init__(self, request, params, model, model_admin):
         super().__init__(request, params, model, model_admin)
@@ -68,6 +68,9 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
     actions = ['bulk_pdf_download']
     exclude = ['file']
 
+    def get_queryset(self, request):
+        return FormSubmission.objects.filter(action='submit').order_by('sent_at')
+
     def file_url(self, obj):
         if obj.file:
             return mark_safe('<a href="' + obj.file.url + '">' + obj.file.name + '</a>')
@@ -84,7 +87,7 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
         response['Content-Disposition'] = 'attachment; filename=%s' % 'PDF_export.zip'
         return response
 
-    bulk_pdf_download.short_description = "Download PDF files form selected forms"
+    bulk_pdf_download.short_description = "Stiahnutie PDF dokumentov z vybraných formulárov"
 
     def has_add_permission(self, request):
         return False

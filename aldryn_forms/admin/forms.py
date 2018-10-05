@@ -28,7 +28,7 @@ class BaseFormExportForm(forms.Form):
     excel_limit = 65536
     export_filename = 'export-{language}-{form_name}-%Y-%m-%d'
 
-    form_name = forms.ChoiceField(choices=[])
+    form_name = forms.ChoiceField(choices=[], label=_("Form name"))
     from_date = forms.DateField(
         label=_('from date'),
         required=False,
@@ -126,8 +126,10 @@ class FormExportStep2Form(forms.Form):
         pre_selected_fields = (field.field_id for field in current_fields)
 
         self.fields['current_fields'].choices = form_field_choices(current_fields)
+        self.fields['current_fields'].label= _("Current fields")
         self.fields['current_fields'].initial = pre_selected_fields
         self.fields['old_fields'].choices = form_field_choices(old_fields)
+        self.fields['old_fields'].label= _("Old fields")
 
     def get_fields(self):
         data = self.cleaned_data

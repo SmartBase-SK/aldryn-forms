@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-25 08:35+0200\n"
+"POT-Creation-Date: 2018-10-03 14:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,10 @@ msgstr "data"
 #: aldryn_forms/admin/base.py:118
 msgid "people notified"
 msgstr "notifikovaný užívatelia"
+
+#: aldryn_forms/admin/forms.py:31
+msgid "Form name"
+msgstr "Názov formulára"
 
 #: aldryn_forms/admin/forms.py:33
 msgid "from date"
@@ -81,7 +85,15 @@ msgstr ""
 "Export zlyhal! Našlo sa viac ako 65 536 záznamov, prekrečený limit Excel "
 "súboru!"
 
-#: aldryn_forms/admin/forms.py:143
+#: aldryn_forms/admin/forms.py:129
+msgid "Current fields"
+msgstr "Súčasné políčka"
+
+#: aldryn_forms/admin/forms.py:132
+msgid "Old fields"
+msgstr "Staré políčka"
+
+#: aldryn_forms/admin/forms.py:145
 msgid "Please select at least one field to export."
 msgstr "Prosím vzberte aspoň jedno políčko na export"
 
@@ -475,10 +487,6 @@ msgid ""
 msgstr "Popisný text zobrazený vedľa políčka. Podobne ako tento."
 
 #: aldryn_forms/forms.py:310
-#, fuzzy
-#| msgid ""
-#| "Explanatory text displayed next to input field. Just like this one. You "
-#| "can use MAXSIZE as a placeholder for the maximum size configured below."
 msgid ""
 "Explanatory text displayed next to input field. Just like this one. You can "
 "use MAXSIZE, MAXWIDTH, MAXHEIGHT as a placeholders for the maximum file size "

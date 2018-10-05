@@ -8,7 +8,7 @@ class Exporter(object):
         self.queryset = queryset
 
     def get_dataset(self, fields, with_user_data, with_extended_data):
-        headers = [field.rpartition('-')[0] for field in fields]
+        headers = ['Čas odoslania'] + [field.rpartition('-')[0] for field in fields]
 
         headers = self.include_user_verification_headers(headers)
 
@@ -21,8 +21,8 @@ class Exporter(object):
 
         dataset = Dataset(headers=headers)
 
-        for submission in self.queryset.only('data').iterator():
-            row_data = []
+        for submission in self.queryset.only('data', 'sent_at').iterator():
+            row_data = [submission.sent_at.strftime('%d.%m.%Y %H:%M:%S')]
             form_fields = [field for field in submission.get_form_data()
                            if field.field_id in fields]
 
