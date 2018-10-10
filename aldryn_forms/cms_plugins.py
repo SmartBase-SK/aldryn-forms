@@ -45,6 +45,7 @@ from .validators import (
     is_valid_recipient,
     MinChoicesValidator,
     MaxChoicesValidator,
+    validate_date
 )
 
 
@@ -67,7 +68,7 @@ class FormPlugin(FieldContainer):
     child_classes = (
         'BooleanField', 'EmailField', 'FileField', 'HiddenField', 'PhoneField', 'NumberField', 'ImageField', 'Fieldset',
         'MultipleSelectField', 'MultipleCheckboxSelectField', 'RadioSelectField', 'SelectField', 'SubmitButton',
-        'SaveProgressButton', 'TextAreaField', 'TextField')
+        'SaveProgressButton', 'TextAreaField', 'TextField', 'DateField')
     form = FormPluginForm
     filter_horizontal = ['recipients']
 
@@ -542,6 +543,21 @@ class BaseTextField(Field):
 class TextField(BaseTextField):
     name = _('Text Field')
 
+class DateField(BaseTextField):
+    name = _('Date field')
+    form_field_widget = forms.DateField.widget
+    fieldset_general_fields = (
+        'label',
+        'name',
+        'required',
+    )
+    fieldset_advanced_fields = (
+        'help_text',
+        'required_message',
+        'placeholder_text',
+    )
+    def get_form_field_validators(self, instance):
+        return [validate_date]
 
 class TextAreaField(BaseTextField):
     name = _('Text Area Field')
@@ -952,3 +968,4 @@ plugin_pool.register_plugin(SubmitButton)
 plugin_pool.register_plugin(SaveProgressButton)
 plugin_pool.register_plugin(TextAreaField)
 plugin_pool.register_plugin(TextField)
+plugin_pool.register_plugin(DateField)

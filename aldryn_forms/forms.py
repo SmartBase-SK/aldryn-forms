@@ -251,18 +251,18 @@ class TextFieldForm(MinMaxValueForm):
 
     def __init__(self, *args, **kwargs):
         super(TextFieldForm, self).__init__(*args, **kwargs)
+        if 'min_value' in self.fields:
+            self.fields['min_value'].label = _(u'Min length')
+            self.fields['min_value'].help_text = _(u'Required number of characters to type.')
 
-        self.fields['min_value'].label = _(u'Min length')
-        self.fields['min_value'].help_text = _(u'Required number of characters to type.')
-
-        self.fields['max_value'].label = _(u'Max length')
-        self.fields['max_value'].help_text = _(u'Maximum number of characters to type.')
-        self.fields['max_value'].required = False
+        if 'max_value' in self.fields:
+            self.fields['max_value'].label = _(u'Max length')
+            self.fields['max_value'].help_text = _(u'Maximum number of characters to type.')
+            self.fields['max_value'].required = False
 
     class Meta:
         fields = ['label', 'placeholder_text', 'help_text',
                   'min_value', 'max_value', 'required', 'required_message']
-
 
 class HiddenFieldForm(ExtandableErrorForm):
     class Meta:
