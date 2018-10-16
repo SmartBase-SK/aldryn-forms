@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from tablib import Dataset
+from django.utils.translation import ugettext
 
 
 class Exporter(object):
@@ -8,7 +9,7 @@ class Exporter(object):
         self.queryset = queryset
 
     def get_dataset(self, fields, with_user_data, with_extended_data):
-        headers = ['Čas odoslania'] + [field.rpartition('-')[0] for field in fields]
+        headers = [ugettext('Sent time')] + [field.rpartition('-')[0] for field in fields]
 
         headers = self.include_user_verification_headers(headers)
 
@@ -78,16 +79,35 @@ class Exporter(object):
         return extended_data + data
 
     def include_user_verification_headers(self, headers):
-        return ['Registration signed', 'MSP status verified', 'MSP status verification date'] + headers
+        return [
+                ugettext('Registration signed'),
+                ugettext('MSP status verified'),
+                ugettext('MSP status verification date'),
+                ] + headers
 
     def include_user_headers(self, headers):
-        return ['First name', 'Last name', 'Email', 'Client type', 'Client code'] + headers
+        return [
+                   ugettext('First name'),
+                   ugettext('Last name'),
+                   ugettext('Email'),
+                   ugettext('Client type'),
+                   ugettext('Client code'),
+               ] + headers
 
     def include_extended_data_headers(self, headers, client_type):
         if client_type == 'A':
-            return ['Identification number', 'Phone number', 'Address'] + headers
+            return [
+                       ugettext('Identification number'),
+                       ugettext('Phone number'),
+                       ugettext('Address'),
+                   ] + headers
         else:
-            return ['ICO', 'DIC', 'Company name', 'Business address'] + headers
+            return [
+                       ugettext('ICO'),
+                       ugettext('DIC'),
+                       ugettext('Company name'),
+                       ugettext('Business address'),
+                   ] + headers
 
     def get_fields_for_export(self):
         old_fields = []

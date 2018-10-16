@@ -554,22 +554,26 @@ class FormSubmission(models.Model):
         to=settings.AUTH_USER_MODEL,
         related_name='user_forms',
         null=True,
+        verbose_name=_('user'),
     )
 
     file = models.FileField(
         null=True,
+        verbose_name=_('file'),
     )
 
     form = models.ForeignKey(
         to=FormPlugin,
         related_name='submited_forms',
-        null=True
+        null=True,
+        verbose_name=_('form'),
     )
 
     action = models.CharField(
         max_length=10,
         null=True,
         editable=False,
+        verbose_name=_('action'),
     )
 
     name = models.CharField(
@@ -596,9 +600,15 @@ class FormSubmission(models.Model):
         max_length=255,
         blank=True,
     )
-    sent_at = models.DateTimeField(null=True)
+    sent_at = models.DateTimeField(
+        null=True,
+        verbose_name=_('sent at'),
+    )
 
-    agreed_consents = models.ManyToManyField(to=Consent)
+    agreed_consents = models.ManyToManyField(
+        to=Consent,
+        verbose_name=_('agreed consents'),
+    )
 
     class Meta:
         ordering = ['-sent_at']

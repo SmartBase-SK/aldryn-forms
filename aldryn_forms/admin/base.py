@@ -76,6 +76,8 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
             return mark_safe('<a href="' + obj.file.url + '">' + obj.file.name + '</a>')
         return mark_safe('-')
 
+    file_url.short_description = _("file url")
+
     def bulk_pdf_download(self, request, queryset):
         data_store = BytesIO()
         zf = zipfile.ZipFile(data_store, 'w')

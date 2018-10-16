@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-10 12:46+0200\n"
+"POT-Creation-Date: 2018-10-16 15:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,17 +31,86 @@ msgstr "Iba email"
 msgid "None"
 msgstr "Žiadna"
 
-#: aldryn_forms/admin/base.py:24
+#: aldryn_forms/admin/base.py:24 aldryn_forms/models.py:569
 msgid "form"
-msgstr "formulára"
+msgstr "formulár"
 
-#: aldryn_forms/admin/base.py:104
+#: aldryn_forms/admin/base.py:79
+msgid "file url"
+msgstr "url súboru"
+
+#: aldryn_forms/admin/base.py:106
 msgid "data"
-msgstr "data"
+msgstr "dáta"
 
-#: aldryn_forms/admin/base.py:121
+#: aldryn_forms/admin/base.py:123
 msgid "people notified"
 msgstr "notifikovaný užívatelia"
+
+#: aldryn_forms/admin/exporter.py:12
+msgid "Sent time"
+msgstr "Dátum odoslania"
+
+#: aldryn_forms/admin/exporter.py:83
+msgid "Registration signed"
+msgstr "Podpísaná registrácia"
+
+#: aldryn_forms/admin/exporter.py:84
+msgid "MSP status verified"
+msgstr "Stav MSP bol overený"
+
+#: aldryn_forms/admin/exporter.py:85
+msgid "MSP status verification date"
+msgstr "Dátum overenia stavu MSP"
+
+#: aldryn_forms/admin/exporter.py:90
+msgid "First name"
+msgstr "Meno"
+
+#: aldryn_forms/admin/exporter.py:91
+msgid "Last name"
+msgstr "Priezvisko"
+
+#: aldryn_forms/admin/exporter.py:92
+#: aldryn_forms/contrib/email_notifications/cms_plugins.py:92
+msgid "Email"
+msgstr "Email"
+
+#: aldryn_forms/admin/exporter.py:93
+msgid "Client type"
+msgstr "Typ klienta"
+
+#: aldryn_forms/admin/exporter.py:94
+msgid "Client code"
+msgstr "Kód klienta"
+
+#: aldryn_forms/admin/exporter.py:100
+msgid "Identification number"
+msgstr "ID"
+
+#: aldryn_forms/admin/exporter.py:101
+msgid "Phone number"
+msgstr "Telefón"
+
+#: aldryn_forms/admin/exporter.py:102
+msgid "Address"
+msgstr "Adresa"
+
+#: aldryn_forms/admin/exporter.py:106
+msgid "ICO"
+msgstr "IČO"
+
+#: aldryn_forms/admin/exporter.py:107
+msgid "DIC"
+msgstr "DIČ"
+
+#: aldryn_forms/admin/exporter.py:108
+msgid "Company name"
+msgstr "Názov spoločnosti"
+
+#: aldryn_forms/admin/exporter.py:109
+msgid "Business address"
+msgstr "Adresa spoločnosti"
 
 #: aldryn_forms/admin/forms.py:31
 msgid "Form name"
@@ -95,7 +164,7 @@ msgstr "Staré políčka"
 
 #: aldryn_forms/admin/forms.py:145
 msgid "Please select at least one field to export."
-msgstr "Prosím vzberte aspoň jedno políčko na export"
+msgstr "Prosím vyberte aspoň jedno políčko na export"
 
 #: aldryn_forms/admin/views.py:68
 msgid "No records found"
@@ -257,81 +326,79 @@ msgstr "Skupina polí"
 msgid "Form fields"
 msgstr "Formulárove polia"
 
-#: aldryn_forms/cms_plugins.py:544
+#: aldryn_forms/cms_plugins.py:545
 msgid "Text Field"
 msgstr "Textové pole"
 
-#: aldryn_forms/cms_plugins.py:547
-#, fuzzy
-#| msgid "Captcha Field"
+#: aldryn_forms/cms_plugins.py:548
 msgid "Date field"
-msgstr "Captcha pole"
+msgstr "Dátum"
 
-#: aldryn_forms/cms_plugins.py:563
+#: aldryn_forms/cms_plugins.py:566
 msgid "Text Area Field"
 msgstr "Rozšírené textové pole"
 
-#: aldryn_forms/cms_plugins.py:604
+#: aldryn_forms/cms_plugins.py:609
 msgid "Hidden Field"
 msgstr "Skryté pole"
 
-#: aldryn_forms/cms_plugins.py:613
+#: aldryn_forms/cms_plugins.py:621
 msgid "Phone Field"
 msgstr "Pole pre telefónne číslo"
 
-#: aldryn_forms/cms_plugins.py:619
+#: aldryn_forms/cms_plugins.py:627
 msgid "Number Field"
 msgstr "Číslene pole"
 
-#: aldryn_forms/cms_plugins.py:625
+#: aldryn_forms/cms_plugins.py:633
 msgid "Email Field"
 msgstr "Pole pre emailovú adresu"
 
-#: aldryn_forms/cms_plugins.py:662
+#: aldryn_forms/cms_plugins.py:643
 msgid "File upload field"
 msgstr "Pole pre súbor"
 
-#: aldryn_forms/cms_plugins.py:741
+#: aldryn_forms/cms_plugins.py:722
 msgid "Image upload field"
 msgstr "Pole pre obrázok"
 
-#: aldryn_forms/cms_plugins.py:778
+#: aldryn_forms/cms_plugins.py:759
 msgid "Yes/No Field"
 msgstr "Pole Áno/Nie"
 
-#: aldryn_forms/cms_plugins.py:799
+#: aldryn_forms/cms_plugins.py:783
 msgid "Yes"
 msgstr "Áno"
 
-#: aldryn_forms/cms_plugins.py:799
+#: aldryn_forms/cms_plugins.py:783
 msgid "No"
 msgstr "Nie"
 
-#: aldryn_forms/cms_plugins.py:807
+#: aldryn_forms/cms_plugins.py:791
 msgid "Select Field"
 msgstr "Pole s výberom"
 
-#: aldryn_forms/cms_plugins.py:840
+#: aldryn_forms/cms_plugins.py:827
 msgid "Multiple Select Field"
 msgstr "Pole s výberom viacerých možností"
 
-#: aldryn_forms/cms_plugins.py:877
+#: aldryn_forms/cms_plugins.py:867
 msgid "Multiple Checkbox Field"
 msgstr "Pole s výberom viacerých checkboxov"
 
-#: aldryn_forms/cms_plugins.py:881
+#: aldryn_forms/cms_plugins.py:871
 msgid "Radio Select Field"
 msgstr "Pole s výberom jednej možnosti"
 
-#: aldryn_forms/cms_plugins.py:921
+#: aldryn_forms/cms_plugins.py:914
 msgid "Captcha Field"
 msgstr "Captcha pole"
 
-#: aldryn_forms/cms_plugins.py:944
+#: aldryn_forms/cms_plugins.py:937
 msgid "Submit Button"
 msgstr "Tlačidlo na odoslanie"
 
-#: aldryn_forms/cms_plugins.py:951
+#: aldryn_forms/cms_plugins.py:944
 msgid "Save button"
 msgstr "Tlačidlo na uloženie"
 
@@ -353,10 +420,6 @@ msgstr "Príjemcovia"
 msgid ""
 "variables can be used with by wrapping with \"${variable}\" like ${variable}"
 msgstr "Premenné môžu byť použité \"${variable}\" ako ${variable}"
-
-#: aldryn_forms/contrib/email_notifications/cms_plugins.py:92
-msgid "Email"
-msgstr "Email"
 
 #: aldryn_forms/contrib/email_notifications/cms_plugins.py:117
 msgid "available text variables"
@@ -448,6 +511,8 @@ msgid ""
 "Image width must be under %(max_size)s pixels. Current width is "
 "%(actual_size)s pixels."
 msgstr ""
+"Veľkost obrázku musí byť menšia ako %(max_size)s. Aktuálna veľkosť je "
+"%(actual_size)s."
 
 #: aldryn_forms/forms.py:77
 #, python-format
@@ -734,31 +799,51 @@ msgstr "Možnosť"
 msgid "Options"
 msgstr "Možnosti"
 
-#: aldryn_forms/models.py:577
+#: aldryn_forms/models.py:557
+msgid "user"
+msgstr "Používateľ"
+
+#: aldryn_forms/models.py:562
+msgid "file"
+msgstr "Súbor"
+
+#: aldryn_forms/models.py:576
+msgid "action"
+msgstr "Akcia"
+
+#: aldryn_forms/models.py:581
 msgid "form name"
 msgstr "Názov formulára"
 
-#: aldryn_forms/models.py:583
+#: aldryn_forms/models.py:587
 msgid "users notified"
 msgstr "Nitifikovaní užívatelia"
 
-#: aldryn_forms/models.py:585
+#: aldryn_forms/models.py:589
 msgid "People who got a notification when form was submitted."
 msgstr "Ľudia, ktorí dostanú notifikáciu po odoslaní formulára."
 
-#: aldryn_forms/models.py:589
+#: aldryn_forms/models.py:593
 msgid "form language"
 msgstr "Jazyk formulára"
 
-#: aldryn_forms/models.py:595
+#: aldryn_forms/models.py:599
 msgid "form url"
 msgstr "URL formulára"
 
 #: aldryn_forms/models.py:605
+msgid "sent at"
+msgstr "Poslané dňa"
+
+#: aldryn_forms/models.py:610
+msgid "agreed consents"
+msgstr "Súhlasy"
+
+#: aldryn_forms/models.py:615
 msgid "Form submission"
 msgstr "Odoslaný formulár"
 
-#: aldryn_forms/models.py:606
+#: aldryn_forms/models.py:616
 msgid "Form submissions"
 msgstr "Odoslané formuláre"
 
