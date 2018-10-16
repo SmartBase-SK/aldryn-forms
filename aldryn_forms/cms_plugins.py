@@ -332,16 +332,16 @@ class Field(FormElement):
     form_field_widget = None
     form_field_enabled_options = [
         'label',
-        'name',
         'help_text',
         'required',
     ]
-    form_field_disabled_options = []
+    form_field_disabled_options = [
+        'name',
+    ]
 
     # Used to configure default fieldset in admin form
     fieldset_general_fields = [
         'label',
-        'name',
         'placeholder_text',
         'required',
     ]
@@ -517,7 +517,6 @@ class BaseTextField(Field):
     form_field_widget_input_type = 'text'
     form_field_enabled_options = [
         'label',
-        'name',
         'help_text',
         'required',
         'max_length',
@@ -526,7 +525,9 @@ class BaseTextField(Field):
         'placeholder',
         'initial_value',
     ]
-
+    form_field_disabled_options = [
+        'name',
+    ]
     def get_form_field_validators(self, instance):
         validators = []
 
@@ -546,9 +547,11 @@ class TextField(BaseTextField):
 class DateField(BaseTextField):
     name = _('Date field')
     form_field_widget = forms.DateField.widget
+    form_field_disabled_options = [
+        'name',
+    ]
     fieldset_general_fields = (
         'label',
-        'name',
         'required',
     )
     fieldset_advanced_fields = (
@@ -565,9 +568,11 @@ class TextAreaField(BaseTextField):
     form = TextAreaFieldForm
     parent_classes = ('FormPlugin', 'Fieldset')
     form_field_widget = forms.Textarea
+    form_field_disabled_options = [
+        'name',
+    ]
     fieldset_general_fields = [
         'label',
-        'name',
         'placeholder_text',
         ('text_area_rows', 'text_area_columns',),
         'required',
@@ -629,33 +634,6 @@ class EmailField(BaseTextField):
     form_field = forms.EmailField
     form_field_widget = forms.EmailInput
     form_field_widget_input_type = 'email'
-    fieldset_advanced_fields = [
-                                   'email_send_notification',
-                                   'email_subject',
-                                   'email_body',
-                               ] + Field.fieldset_advanced_fields
-    email_template_base = 'aldryn_forms/emails/user/notification'
-
-    def send_notification_email(self, email, form, form_field_instance):
-        context = {
-            'form_name': form.instance.name,
-            'form_data': form.get_serialized_field_choices(is_confirmation=True),
-            'body_text': form_field_instance.email_body,
-        }
-        send_mail(
-            recipients=[email],
-            context=context,
-            subject=form_field_instance.email_subject,
-            template_base=self.email_template_base
-        )
-
-    def form_post_save(self, instance, form, **kwargs):
-        field_name = form.form_plugin.get_form_field_name(field=instance)
-
-        email = form.cleaned_data.get(field_name)
-
-        if email and instance.email_send_notification:
-            self.send_notification_email(email, form, instance)
 
 
 class FileField(Field):
@@ -780,15 +758,18 @@ class BooleanField(Field):
     form = BooleanFieldForm
     form_field = forms.BooleanField
     form_field_widget = form_field.widget
+    form_field_disabled_options = [
+        'name',
+    ]
     form_field_enabled_options = [
         'label',
-        'name',
         'help_text',
         'required',
         'error_messages',
     ]
     fieldset_general_fields = [
-        'label', 'name', 'required',
+        'label',
+        'required',
     ]
     fieldset_advanced_fields = [
         'help_text',
@@ -809,15 +790,18 @@ class SelectField(Field):
     form = SelectFieldForm
     form_field = forms.ModelChoiceField
     form_field_widget = form_field.widget
+    form_field_disabled_options = [
+        'name',
+    ]
     form_field_enabled_options = [
         'label',
-        'name',
         'help_text',
         'required',
         'error_messages',
     ]
     fieldset_general_fields = [
-        'label', 'name', 'required',
+        'label',
+        'required',
     ]
     fieldset_advanced_fields = [
         'help_text',
@@ -842,15 +826,18 @@ class MultipleSelectField(SelectField):
     form = MultipleSelectFieldForm
     form_field = forms.ModelMultipleChoiceField
     form_field_widget = forms.CheckboxSelectMultiple
+    form_field_disabled_options = [
+        'name',
+    ]
     form_field_enabled_options = [
         'label',
-        'name',
         'help_text',
         'required',
         'validators',
     ]
     fieldset_general_fields = [
-        'label', 'name', 'required',
+        'label',
+        'required',
     ]
     fieldset_advanced_fields = [
         ('min_value', 'max_value'),
@@ -883,15 +870,18 @@ class RadioSelectField(Field):
     form = RadioFieldForm
     form_field = forms.ModelChoiceField
     form_field_widget = forms.RadioSelect
+    form_field_disabled_options = [
+        'name',
+    ]
     form_field_enabled_options = [
         'label',
-        'name',
         'help_text',
         'required',
         'error_messages',
     ]
     fieldset_general_fields = [
-        'label', 'name', 'required',
+        'label',
+        'required',
     ]
     fieldset_advanced_fields = [
         'help_text',
