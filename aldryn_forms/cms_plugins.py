@@ -610,8 +610,11 @@ class HiddenField(BaseTextField):
     form = HiddenFieldForm
     form_field_widget_input_type = 'hidden'
     parent_classes = ('FormPlugin', 'Fieldset')
-    fieldset_general_fields = ['name', 'initial_value']
+    fieldset_general_fields = ['label', 'initial_value']
     fieldset_advanced_fields = []
+    form_field_disabled_options = [
+        'name',
+    ]
 
 
 class PhoneField(BaseTextField):
