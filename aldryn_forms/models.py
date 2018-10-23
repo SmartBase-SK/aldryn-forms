@@ -517,6 +517,8 @@ class Option(models.Model):
     value = models.CharField(_('Value'), max_length=255)
     default_value = models.BooleanField(_('Default'), default=False)
     position = models.PositiveIntegerField(_('Position'), blank=True)
+    extra_field = models.BooleanField(verbose_name=_('Conditional field'), default=False, blank=True)
+    extra_label = models.CharField(verbose_name=_('Conditional label'), max_length=255, blank=True)
 
     class Meta:
         verbose_name = _('Option')

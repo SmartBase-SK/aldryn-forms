@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.admin import TabularInline
 from django.core.validators import MinLengthValidator
 from django.db.models import query
+from django.forms import ModelMultipleChoiceField
 from django.template.loader import select_template
 from django.utils.safestring import mark_safe
 from django.utils.six import text_type
@@ -17,6 +18,7 @@ from emailit.api import send_mail
 from filer.models import filemodels, imagemodels
 from sizefield.utils import filesizeformat
 
+from .models import Option
 from . import models
 from .forms import (
     RestrictedFileField,
@@ -823,15 +825,39 @@ class SelectField(Field):
         return kwargs
 
 
+class ModelConditionalField(forms.ModelMultipleChoiceField):
+
+    def clean(self, value):
+        cleaned_value = []
+        final_value = []
+        for val in value:
+            if isinstance(val, tuple):
+                if val[1] != '':
+                    cleaned_value.append(val[0])
+                    final_value.append(val)
+            else:
+                cleaned_value.append(val)
+                final_value.append(val)
+        super().clean(cleaned_value)
+        return final_value
+
+
+class ConditionalWidget(forms.CheckboxSelectMultiple):
+
+    def value_from_datadict(self, data, files, name):
+        val = super().value_from_datadict(data, files, name)
+        for key, value in data.items():
+            if 'extra-' in key:
+                val.append((key.replace('extra-', ''), value))
+        return val
+
+
 class MultipleSelectField(SelectField):
     name = _('Multiple Select Field')
-    parent_classes = ('FormPlugin', 'Fieldset')
+
     form = MultipleSelectFieldForm
     form_field = forms.ModelMultipleChoiceField
     form_field_widget = forms.CheckboxSelectMultiple
-    form_field_disabled_options = [
-        'name',
-    ]
     form_field_enabled_options = [
         'label',
         'help_text',
@@ -865,6 +891,45 @@ class MultipleSelectField(SelectField):
 
 class MultipleCheckboxSelectField(MultipleSelectField):
     name = _('Multiple Checkbox Field')
+    form_field = ModelConditionalField
+    form_field_widget = ConditionalWidget
+
+    form_field_enabled_options = [
+        'label',
+        'help_text',
+        'required',
+        'validators',
+    ]
+
+    def serialize_field(self, form, field, is_confirmation=False):
+        """Returns a (key, label, value) named tuple for the given field."""
+        items = form.cleaned_data.get(field.name)
+        values = []
+        for item in items:
+            if isinstance(item, tuple):
+                option = Option.objects.get(id=item[0])
+                full_value = option.value + " ("
+                if option.extra_label != "":
+                    full_value += option.extra_label + ": "
+                full_value += item[1] + ") "
+                values.append(full_value)
+            else:
+                option = Option.objects.get(id=item)
+                values.append(option.value)
+
+        value = self.serialize_value(
+            instance=field.plugin_instance,
+            value=", ".join(values),
+            is_confirmation=is_confirmation
+        )
+
+        serialized_field = SerializedFormField(
+            name=field.name,
+            label=field.label,
+            field_occurrence=field.field_occurrence,
+            value=value,
+        )
+        return serialized_field
 
 
 class RadioSelectField(Field):

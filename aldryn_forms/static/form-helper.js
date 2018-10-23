@@ -12,6 +12,11 @@ $(document).ready(function () {
             },
         });
     }
+
+    $('.condition-field').on('change', toogle_conditions)
+        .each(function () {
+            toogle_conditions(this);
+    });
 });
 
 function count_input(e) {
@@ -21,8 +26,8 @@ function count_input(e) {
     let min_length = parseInt($(elm).attr('minlength'));
     let max_length = parseInt($(elm).attr('maxlength'));
 
-    if (min_length || max_length){
-        if (text_length == 0){
+    if (min_length || max_length) {
+        if (text_length == 0) {
             $(elm).next('span').text("");
         } else {
             $(elm).next('span').text(text_length);
@@ -32,6 +37,20 @@ function count_input(e) {
             $(elm).next('span').addClass('counter__red');
         else
             $(elm).next('span').removeClass('counter__red');
+    }
+}
+
+function toogle_conditions(e) {
+    let elm = e.target ? e.target : e;
+    let curr_id = $(elm).attr('id');
+    curr_id = curr_id.replace('condition-', '');
+    let extra_field = $('#extra-field-' + curr_id);
+    if (elm.checked) {
+        extra_field.closest(".condition-wrapper").removeClass('hidden');
+        extra_field.focus().attr("required", true);
+    } else {
+        extra_field.closest(".condition-wrapper").addClass('hidden');
+        extra_field.val("").attr("required", false);
     }
 }
 

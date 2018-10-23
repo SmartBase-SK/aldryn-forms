@@ -33,3 +33,17 @@ def force_text(val):
 @register.filter()
 def force_text_list(val):
     return [encoding.force_text(v) for v in val]
+
+
+@register.simple_tag()
+def get_multiselect_textfield_value(field, id):
+    for val in field.value():
+        if isinstance(val, tuple):
+            if val[0] == str(id):
+                return val[1]
+    return ""
+
+
+@register.simple_tag()
+def toogle_condition_checkboxes(field, id):
+    return "checked" if get_multiselect_textfield_value(field, id) != "" else ""
