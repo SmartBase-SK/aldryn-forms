@@ -12,6 +12,7 @@ from io import BytesIO
 import os
 from django.utils.safestring import mark_safe
 from aldryn_forms.models import FormSubmission
+from aldryn_forms.forms import ProcessingCenterForm
 
 if six.PY2:
     str_dunder_method = '__unicode__'
@@ -58,6 +59,7 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
         'form',
         'user',
         'name',
+        'center',
         'get_data_for_display',
         'language',
         'sent_at',
@@ -67,6 +69,15 @@ class BaseFormSubmissionAdmin(admin.ModelAdmin):
     ]
     actions = ['bulk_pdf_download']
     exclude = ['file']
+
+    def center(self, obj):
+        options = ProcessingCenterForm.CENTER_OPTIONS
+        for op in options:
+            if obj.processing_center == op[0]:
+                return op[1]
+        return ""
+    center.short_description = _("Processing center")
+
 
     def get_queryset(self, request):
         return FormSubmission.objects.filter(action='submit').order_by('sent_at')

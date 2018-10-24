@@ -612,6 +612,12 @@ class FormSubmission(models.Model):
         verbose_name=_('agreed consents'),
     )
 
+    processing_center = models.CharField(
+        verbose_name=_("Processing center"),
+        max_length=5,
+        null=True,
+    )
+
     class Meta:
         ordering = ['-sent_at']
         verbose_name = _('Form submission')

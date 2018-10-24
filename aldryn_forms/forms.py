@@ -163,6 +163,8 @@ class FormSubmissionBaseForm(forms.Form):
         self.instance.set_form_data(self)
         if hasattr(self, 'consents_form') and 'save-button' not in self.request.POST:
             self.instance.agreed_consents = self.consents_form.get_agreed_consents()
+        if hasattr(self, 'processing_form') and 'save-button' not in self.request.POST:
+            self.instance.processing_center = self.processing_form.cleaned_data['center']
         self.instance.save()
 
 
@@ -385,3 +387,22 @@ class ConsentForm(forms.Form):
 
     def get_agreed_consents(self):
         return list(Consent.objects.filter(pk__in=self.cleaned_data['consents']))
+
+
+class ProcessingCenterForm(forms.Form):
+    CENTER_OPTIONS = (
+        ('SK-TA', 'Trnavský kraj'),
+        ('SK-TC', 'Trenčiansky kraj'),
+        ('SK-NI', 'Nitriansky kraj'),
+        ('SK-ZI', 'Žilinský kraj'),
+        ('SK-BC', 'Banskobystrický kraj'),
+        ('SK-PV', 'Prešovský kraj'),
+        ('SK-KI', 'Košický kraj'),
+    )
+    center = forms.ChoiceField(
+        label= _("Please choose processing center"),
+        help_text="Lorem ipsum dolor sit amet",
+        required=True,
+        choices=CENTER_OPTIONS,
+        widget=forms.RadioSelect()
+    )

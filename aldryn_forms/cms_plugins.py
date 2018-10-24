@@ -9,7 +9,6 @@ from django.contrib import messages
 from django.contrib.admin import TabularInline
 from django.core.validators import MinLengthValidator
 from django.db.models import query
-from django.forms import ModelMultipleChoiceField
 from django.template.loader import select_template
 from django.utils.safestring import mark_safe
 from django.utils.six import text_type
@@ -38,6 +37,7 @@ from .forms import (
     ImageFieldForm,
     HiddenFieldForm,
     ConsentForm,
+    ProcessingCenterForm,
 )
 from .helpers import get_user_name
 from .models import SerializedFormField
@@ -137,10 +137,14 @@ class FormPlugin(FieldContainer):
                 data = None
             form.consents_form = ConsentForm(data, user=request.user)
 
+        if request.obj and request.obj.event_division == 'REG':
+            if request.method == 'POST':
+                center_data = {'center': form_kwargs['data'].get('center')}
+            else:
+                center_data = None
+            form.processing_form = ProcessingCenterForm(center_data)
+
         if request.method == 'POST' and 'save-button' in request.POST:
-            if instance.include_consents and not form.consents_form.is_valid():
-                self.form_invalid(instance, request, form)
-                return form, False
             form.is_valid()
             form._errors = {}
             form.save()
@@ -149,7 +153,8 @@ class FormPlugin(FieldContainer):
             return form, True
 
         elif request.method == 'POST' and form.is_valid():
-            if instance.include_consents and not form.consents_form.is_valid():
+            if (instance.include_consents and not form.consents_form.is_valid()) or (
+                    hasattr(form, 'processing_form') and not form.processing_form.is_valid()):
                 self.form_invalid(instance, request, form)
                 return form, False
             fields = [field for field in form.base_fields.values()
@@ -530,6 +535,7 @@ class BaseTextField(Field):
     form_field_disabled_options = [
         'name',
     ]
+
     def get_form_field_validators(self, instance):
         validators = []
 
@@ -546,6 +552,7 @@ class BaseTextField(Field):
 class TextField(BaseTextField):
     name = _('Text Field')
 
+
 class DateField(BaseTextField):
     name = _('Date field')
     form_field_widget = forms.DateField.widget
@@ -561,8 +568,10 @@ class DateField(BaseTextField):
         'required_message',
         'placeholder_text',
     )
+
     def get_form_field_validators(self, instance):
         return [validate_date]
+
 
 class TextAreaField(BaseTextField):
     name = _('Text Area Field')
